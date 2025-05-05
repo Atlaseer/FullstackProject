@@ -5,6 +5,7 @@ import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Header from './Components/Header'
 import FourOFourPage from './Pages/FourOFour'
+import HomePage from './Pages/HomePage'
 
 
 function App() {
@@ -14,7 +15,8 @@ function App() {
     <BrowserRouter>
       <Header/>
       <Routes>
-        <Route path="/" element={<FourOFourPage />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="*" element={<FourOFourPage />} />
       </Routes>
     </BrowserRouter>
   )
