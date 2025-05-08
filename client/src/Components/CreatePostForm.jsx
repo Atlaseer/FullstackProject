@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { usePosts } from '../PostContext';
+import { usePosts } from '../contexts/PostContext';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Main.css';
 

@@ -8,6 +8,7 @@ import Footer from './Components/Footer'
 import FourOFourPage from './Pages/FourOFour'
 import HomePage from './Pages/HomePage'
 import CreatePostPage from './Pages/CreatePagePost'
+import PrivateRoute from './routes/PrivateRoute'
 
 
 function App() {
@@ -18,7 +19,12 @@ function App() {
       <Header/>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/create" element={<CreatePostPage />} />
+        <Route path="/create" element={
+          
+          <PrivateRoute>
+            <CreatePostPage />
+          </PrivateRoute>
+          } />
         <Route path="*" element={<FourOFourPage />} />
       </Routes>
     </BrowserRouter>
