@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useAuth } from '../contexts/AuthContext';
+// import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Main.css';
 
@@ -9,7 +9,7 @@ const CreatePostForm = () => {
     const [tags, setTags] = useState('');
     const [categories, setCategories] = useState('');
 
-    const { user } = useAuth();
+    // const { user } = useAuth();
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {

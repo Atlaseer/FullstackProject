@@ -8,24 +8,18 @@ import Footer from './Components/Footer'
 import FourOFourPage from './Pages/FourOFour'
 import HomePage from './Pages/HomePage'
 import CreatePostPage from './Pages/CreatePagePost'
-import PrivateRoute from './routes/PrivateRoute'
 import ViewPostPage from './Pages/ViewPostPage'
 
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <BrowserRouter>
       <Header/>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/create" element={
-          
-          <PrivateRoute>
-            <CreatePostPage />
-          </PrivateRoute>
-          } />
+
+        <Route path="/create" element={<CreatePostPage/>} />
         <Route path="/post/:id" element={<ViewPostPage/>} />
         <Route path="*" element={<FourOFourPage />} />
       </Routes>
