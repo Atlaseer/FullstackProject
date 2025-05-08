@@ -12,7 +12,6 @@ const HomePage = () => {
                 <PostList />
             </main>
 
-            <Footer />
         </div>
     )
 

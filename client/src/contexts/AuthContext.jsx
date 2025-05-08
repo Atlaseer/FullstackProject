@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
 
     if (!res.ok) {
       const err = await res.text();
-      throw new Error(err);
+      throw new Error(err);a
     }
 
     const userData = await res.json();

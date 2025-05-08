@@ -7,9 +7,9 @@ const ViewPostPage = () => {
 
     // const post = posts.find((post) => post.id === parseInt(id, 10));
 
-    if(!post) {
-        return <div>Post not found</div>;
-    }
+    // if(!post) {
+    //     return <div>Post not found</div>;
+    // }
 
     return (
         <div style={{ padding: "20px" }}>

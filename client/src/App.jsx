@@ -23,6 +23,7 @@ function App() {
         <Route path="/post/:id" element={<ViewPostPage/>} />
         <Route path="*" element={<FourOFourPage />} />
       </Routes>
+      <Footer/>
     </BrowserRouter>
   )
 }
