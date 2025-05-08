@@ -4,7 +4,9 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Header from './Components/Header'
+import Footer from './Components/Footer'
 import FourOFourPage from './Pages/FourOFour'
+import HomePage from './Pages/HomePage'
 
 
 function App() {
@@ -14,7 +16,8 @@ function App() {
     <BrowserRouter>
       <Header/>
       <Routes>
-        <Route path="/" element={<FourOFourPage />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="*" element={<FourOFourPage />} />
       </Routes>
     </BrowserRouter>
   )
