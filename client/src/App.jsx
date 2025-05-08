@@ -19,7 +19,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
 
-        <Route path="/create" element={<CreatePostPage/>} />
+        <Route path="/newpost" element={<CreatePostPage/>} />
         <Route path="/post/:id" element={<ViewPostPage/>} />
         <Route path="*" element={<FourOFourPage />} />
       </Routes>
