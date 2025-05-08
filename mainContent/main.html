@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Frotum</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body class="not-signed-in">
+    <header class="top-nav">
+        <button class="menu-toggle">&#9776;</button>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Posts</a></li>
+            </ul>
+        </nav>
+        <div class="nav-buttons">
+            <div class="user-display"></div> <!-- ✅ ADDED: Displays logged-in user -->
+            <a href="login/register.html?mode=login" class="button login-button">Login</a>
+            <a href="#" class="button logout-button" style="display: none;">Sign out</a> <!-- ✅ Hidden by default -->
+        </div>
+    </header>
+    
+    <div class="container">
+        <!-- Left Sidebar -->
+        <aside class="sidebar left-sidebar" id="leftSidebar">
+            <button class="close-sidebar">&times;</button>
+            <ul>
+                <li><a href="#">My posts</a></li>
+                <li><a href="#">Followed posts</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <h1>Welcome to FoodLovers</h1>
+            <h2>A new way to discuss food</h2>
+            <p>Share your thoughts, chat with friends, read the latest recipes and share what's on your mind! </p>
+
+            <a href="login/register.html" class="signup-button">Join Now</a>
+            <a href="#" class="guest-signin-button" id="guestSigninButton">Sign in as a Guest</a>
+
+            <!-- Guest Post Form -->
+            <div class="post-form-container guest-form">
+                <h2>Create a Post</h2>
+                <form id="postFormGuest">
+                    
+                    <div class="post-form-group">
+                        <label for="postTitle">Title:</label>
+                        <input type="text" id="postTitle" name="postTitle" required>
+                    </div>
+
+                    <div class="post-form-group">
+                        <label for="postBody">Body:</label>
+                        <textarea id="postBody" name="postBody" required></textarea>
+                    </div>
+
+                    <div class="post-form-group">
+                        <label for="postTags">Tags (comma-separated):</label>
+                        <input type="text" id="postTags" name="postTags">
+                    </div>
+
+                    <div class="post-form-group">
+                        <label for="postUsername">Username:</label>
+                        <input type="text" id="postUsername" name="postUsername" required>
+                    </div>
+
+                    <div class="post-form-group">
+                        <label for="postEmail">Email:</label>
+                        <input type="email" id="postEmail" name="postEmail" required>
+                    </div>
+
+                    <div class="post-form-group">
+                        <label>
+                            <input type="checkbox" id="confirmPostGuest"> Confirm to post
+                        </label>
+                    </div>
+
+                    <button type="submit" id="submitPostGuest" disabled>Post</button>
+                </form>
+                <p id="postError" class="error-message"></p>
+            </div>
+
+            <!-- Logged-In User Post Form (Hidden by Default) -->
+            <div class="post-form-container logged-in-form" style="display: none;">
+                <h2>Create a Post</h2>
+                <form id="postFormLoggedIn">
+
+                    <div class="post-form-group">
+                        <label for="postTitleLoggedIn">Title:</label>
+                        <input type="text" id="postTitleLoggedIn" name="postTitle" required>
+                    </div>
+
+                    <div class="post-form-group">
+                        <label for="postBodyLoggedIn">Body:</label>
+                        <textarea id="postBodyLoggedIn" name="postBody" required></textarea>
+                    </div>
+
+                    <div class="post-form-group">
+                        <label for="postTagsLoggedIn">Tags (comma-separated):</label>
+                        <input type="text" id="postTagsLoggedIn" name="postTags">
+                    </div>
+
+                    <button type="submit" id="submitPostLoggedIn">Post</button>
+                </form>
+            </div>
+
+
+            <div id="postsContainer">
+                <!-- Posts will be loaded dynamically here -->
+            </div>
+        </main>
+        
+        <!-- Right Sidebar (Friends List) -->
+        <aside class="sidebar right-sidebar" id="friendsSidebar">
+            <button class="close-friends">&times;</button>
+            <h2 class="friends-header">Active Friends</h2>
+        
+            <!-- Added this container to make scrolling work correctly -->
+            <div class="friends-container">
+                <ul class="friends-list" id="friendsList">
+                    <!-- Friends will be dynamically added here via JavaScript -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Friends Toggle Button (for mobile) -->
+        <button class="friends-toggle">Friends</button>
+    </div>
+    <script src="mainLoginLogic.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>

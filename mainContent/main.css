@@ -1,0 +1,987 @@
+/* Heading 1 - */
+.main-content h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #141204; 
+}
+
+/* Heading 2  */
+.main-content h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #232322; 
+}
+
+/* Paragraph  */
+.main-content p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    color: #030202; 
+}
+
+/* Post Container - Split into Left (Profile) and Right (Content) */
+.post-container {
+    display: flex;
+    width: 100%;
+    max-width: 800px;
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 15px;
+    border: 1px solid #ddd; /* Light border for definition */
+}
+
+/* User Profile Section (Left 20%) */
+.user-profile {
+    width: 20%;
+    background: #dbe5ee; 
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    border-right: 2px solid #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Avatar Placeholder */
+.avatar-placeholder {
+    width: 60px;
+    height: 60px;
+    background: white;
+    border-radius: 50%;
+    border: 2px solid #ddd; /* Light border */
+    margin-bottom: 10px;
+}
+
+/* User Profile Text */
+.profile-username {
+    font-weight: bold;
+    color: black;
+    font-size: 1.2rem;
+}
+
+.profile-email,
+.profile-address {
+    font-size: 0.9rem;
+    color: #444;
+}
+
+
+/* <----------- Post Content Section ------------> */
+/* ________________________________________________*/
+.guest-form {
+    display: block; /* Default visible */
+}
+
+/* Logged-in Post Form - Shown when user is logged in */
+.logged-in-form {
+    display: none; /* Hidden by default */
+}
+
+/* Post Form Container - Fixing Alignment */
+.post-form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Ensures everything is centered */
+    justify-content: flex-start;
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid #c89b3c;
+    padding: 25px;
+    border-radius: 10px;
+    width: 60%;
+    max-width: 600px; /* Prevents the form from stretching too wide */
+    margin: 40px auto; /* Centers it properly */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* 🔥 NEW FIX: Wraps Inputs in a Flexbox for Proper Alignment */
+.post-form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Aligns labels & inputs properly */
+    width: 90%;
+    max-width: 500px; /* Ensures consistent spacing */
+    margin-bottom: 12px;
+}
+
+/* Labels for Proper Spacing */
+.post-form-group label {
+    font-size: 14px;
+    color: #c89b3c;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* Input Fields - Fixing Alignment */
+.post-form-group input,
+.post-form-group textarea {
+    width: 100%; /* Adjusts spacing */
+    padding: 10px;
+    border: 1px solid #c89b3c;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    color: black;
+}
+
+/* Fix the Post Button */
+.post-form-container button {
+    width: 90%;
+    max-width: 500px;
+    background: linear-gradient(90deg, #c89b3c 0%, #a67c00 100%);
+    border: none;
+    color: #fff;
+    padding: 12px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 10px;
+}
+
+.post-form-container button:hover {
+    background: linear-gradient(90deg, #a67c00 0%, #c89b3c 100%);
+}
+
+
+/* <----- OLD POST FORM, incase new dont looks good -----> */
+.post-content {
+    width: 80%;
+    padding-left: 20px;
+}
+
+/* Reactions */
+.reactions {
+    margin-top: 10px;
+}
+
+.reaction-btn {
+    background: white;
+    color: black;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+    border: 1px solid #ccc;
+}
+
+.reaction-btn:hover {
+    background: #f5f5f5;
+}
+
+/* View Comments Button */
+.view-comments-btn {
+    background: white;
+    color: black;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+    border: 1px solid #ccc;
+}
+
+.view-comments-btn:hover {
+    background: #f5f5f5;
+}
+
+/* General Styles */
+body {
+    margin: 0;
+    padding: 0;
+    background: #f8f9fa; 
+    color: #333; 
+    font-family: 'Inter', sans-serif;
+}
+
+/* <----------- Top Navigation Bar -------------> */
+/*________________________________________________*/
+.top-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 25px;
+    background: #0a0e1a; 
+    border-bottom: 2px solid #dee2e6;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.top-nav nav ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+
+.top-nav nav ul li {
+    margin: 0 15px;
+}
+
+.top-nav nav ul li a {
+    color: #d4af37;
+    text-decoration: none;
+    font-size: 14px; /* Reduced size */
+    padding: 6px 12px;
+    border: 2px solid #d4af37;
+    background: linear-gradient(180deg, #222, #000);
+    border-radius: 6px;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.top-nav nav ul li a:hover {
+    background: #d4af37;
+    color: #000;
+    box-shadow: 0px 4px 8px rgba(212, 175, 55, 0.8);
+}
+
+.button, .nav-buttons a, .sidebar ul li a, .close-sidebar {
+    display: inline-block;
+    padding: 6px 12px; /* Reduced size */
+    border: 2px solid #d4af37;
+    color: #d4af37;
+    background: linear-gradient(180deg, #222, #000);
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: 14px; /* Reduced size */
+    font-weight: bold;
+    border-radius: 6px;
+    transition: all 0.3s;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.7);
+}
+
+.button:hover, .nav-buttons a:hover, .sidebar ul li a:hover, .close-sidebar:hover {
+    background: #d4af37;
+    color: #000;
+    box-shadow: 0px 5px 10px rgba(212, 175, 55, 0.8);
+}
+
+
+/* <---------------- Sidebars ---------------> */
+/*_____________________________________________*/
+.sidebar {
+    width: 20%;
+    height: 100vh;
+    position: fixed;
+    top: 65px;
+    background: #3a7ca5; 
+    color: #333;
+    padding: 20px;
+    overflow-y: auto;
+    border-right: 2px solid #dee2e6;
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.1);
+}
+#leftSidebar {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    top: auto;
+    left: 0;
+    background: #0a0e1a;
+    color: #d4d7e6;
+    padding: 15px; 
+    transition: left 0.3s ease-in-out;
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column; 
+}
+
+.left-sidebar {
+    left: 0;
+}
+
+.right-sidebar {
+    right: 0;
+    border-left: 2px solid #dee2e6;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    padding: 8px 0;
+}
+
+.sidebar ul li a {
+    font-size: 14px; /* Match button size */
+    padding: 6px 12px;
+}
+
+/* Main Content */
+.main-content {
+    margin-left: 20%;
+    margin-right: 20%;
+    padding: 20px;
+    text-align: center;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+    .sidebar {
+        display: none;
+    }
+    .main-content {
+        margin: 0;
+    }
+}
+
+
+/* <---- Friends Sidebar Styling  ----> */
+/*______________________________________*/
+#friendsSidebar {
+    width: 268px;
+    height: 100vh;
+    position: fixed;
+    top: 99px; /* Below the navbar */
+    right: 0; 
+    background: #0a0e1a;
+    color: #d4d7e6; 
+    padding: 5px;
+    transition: right 0.3s ease-in-out;
+    box-shadow: -2px 0px 5px rgba(0, 0, 0, 0.5);
+    overflow-y: auto; /* Prevents sidebar itself from scrolling */
+    display: auto;
+    flex-direction: column;
+    
+}
+
+.friends-container {
+    flex-grow: 1; /* Takes up the remaining space */
+    overflow-y: auto; /* Enables scrolling */
+    max-height: calc(100vh - 80px); /* Prevents overflow beyond the sidebar */
+    padding-right: 5px; /* Space for scrollbar */
+}
+
+#friendsSidebar.active {
+    right: 0;
+}
+
+.close-friends {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: #d4af37;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.close-friends:hover {
+    color: #f5e1a4;
+}
+
+.friends-header {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    padding-bottom: 0px;
+    border-bottom: 1px solid #444;
+}
+
+/* Friends List Container */
+.friends-container {
+    flex-grow: 1;
+    overflow-y: auto;
+    max-height: calc(100vh - 80px);
+}
+
+.friends-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.friend-item:last-child {
+    margin-bottom: 180px;
+}
+
+.friend-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 91%;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 9px;
+    border-radius: 5px;
+    transition: background 0.3s;
+    cursor: pointer;
+    margin-bottom: 5px;
+    min-height: 60px;
+}
+
+.friend-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Profile Image */
+.friend-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    background: #ffffff;
+    margin-right: 10px;
+}
+
+/* Friend Info */
+.friend-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex-grow: 1;
+}
+
+.friend-name {
+    font-weight: bold;
+    color: #ffffff;
+    font-size: 14px;
+    text-align: left;
+}
+
+.friend-status {
+    font-size: 12px;
+    color: #1cb95a;
+    text-align: left;
+}
+
+/* Status Indicator */
+.status-icon {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-left: auto;
+}
+
+.friend-item.online .status-icon {
+    background: #1cb95a; /* Green for online */
+}
+
+.friend-item.offline .status-icon {
+    background: #c0392b; /* Red for offline */
+}
+
+/* Toggle Button */
+.friends-toggle {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    padding: 10px 15px;
+    border: 2px solid #d4af37;
+    background: linear-gradient(180deg, #222, #000);
+    color: #d4af37;
+    text-transform: uppercase;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.friends-toggle:hover {
+    background: #d4af37;
+    color: #000;
+    box-shadow: 0px 4px 8px rgba(212, 175, 55, 0.8);
+}
+.no-friends {
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    color: #d4af37;
+    padding: 10px;
+}
+
+
+/* <---- Signup & Guest Sign-in Buttons -----> */
+/*_____________________________________________*/
+.signup-button, .guest-signin-button {
+    display: inline-block;
+    text-decoration: none;
+    padding: 14px 40px;
+    color: #fff;
+    background-image: linear-gradient(45deg, #df4881, #c430d7);
+    font-size: 24px;
+    border-radius: 30px;
+    border-top-right-radius: 0;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.signup-button:hover, .guest-signin-button:hover {
+    opacity: 0.9;
+}
+
+/* Show buttons when not signed in */
+body.not-signed-in .signup-button, 
+body.not-signed-in .guest-signin-button {
+    display: inline-block;
+    text-align: center;
+}
+
+/* Hide buttons when signed in */
+body:not(.not-signed-in) .signup-button, 
+body:not(.not-signed-in) .guest-signin-button {
+    display: none;
+}
+
+
+/* <---- Main content from API (POSTS) ----> */
+/*___________________________________________*/
+.post {
+    background: #fff;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.post h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.post .comments {
+    margin-top: 15px;
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* Create Post Form Styling */
+.post-form-container {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    max-width: 600px;
+    margin: auto;
+    text-align: center;
+}
+
+.post-form-container h2 {
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #0a0e1a;
+}
+
+.post-form-container label {
+    display: block;
+    font-weight: bold;
+    margin: 10px 0 5px;
+}
+
+.post-form-container input,
+.post-form-container textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.post-form-container textarea {
+    height: 100px;
+}
+
+/* Disabled Submit Button */
+.post-form-container button {
+    background: linear-gradient(45deg, #df4881, #c430d7);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 18px;
+    border-radius: 30px;
+    border-top-right-radius: 0;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 10px;
+}
+
+.post-form-container button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.post-form-container button:hover:not(:disabled) {
+    opacity: 0.9;
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+/* <----- Reaction buttons -----> */
+.reactions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.reaction-btn {
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 5px 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.2s ease;
+}
+
+.reaction-btn:hover {
+    background: #f0f0f0;
+}
+
+
+/* <----- COMMENTS SECTION STYLING -----> */
+/*________________________________________*/
+.comments-section {
+    background: #f9f9f9;
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 10px;
+    display: none; /* Hidden by default */
+    transition: all 0.3s ease-in-out;
+}
+
+/* Comments List */
+.comments-list {
+    max-height: 150px;
+    overflow-y: auto;
+    padding: 10px;
+    border-radius: 5px;
+    background: #fff;
+    margin-bottom: 10px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Individual Comment */
+.comments-list p {
+    padding: 8px 12px;
+    margin: 5px 0;
+    background: #eaeaea;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #333;
+}
+
+/* View Comments Button */
+.view-comments-btn {
+    background: #007bff;
+    color: #fff;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 8px;
+}
+
+.view-comments-btn:hover {
+    background: #0056b3;
+}
+
+/* Comment Input */
+.comment-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+/* Add Comment Button */
+.add-comment-btn {
+    background: #28a745;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.add-comment-btn:hover {
+    background: #218838;
+}
+
+/* <----- Profile Modal Styling -----> */
+/*_____________________________________*/
+.profile-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.profile-modal-content {
+    background: white;
+    width: 350px;  /* Adjust width */
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    position: relative;
+}
+
+.view-profile-btn {
+    background: #302f2d; /* Same black as Rank */
+    color: #d4d7e6; /* Light gray text for contrast */
+    font-size: 10px;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: none;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Hover effect */
+.view-profile-btn:hover {
+    background: #403e3c; /* Slightly lighter shade for effect */
+    box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.3);
+}
+
+.user-profile h3 {
+    font-size: auto; /* Slightly larger for emphasis */
+    font-weight: bold;
+    color: black; /* Light gray text for contrast */
+    padding: 8px 8px;
+    background-color: white;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    width: fit-content;
+    margin: 15px auto; /* Center the username */
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Close Button */
+.close-profile {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #888;
+    transition: 0.3s;
+}
+
+.close-profile:hover {
+    color: #000;
+}
+
+/* Avatar */
+.avatar-large {
+    width: 80px;
+    height: 80px;
+    background-color: #ddd; /* Placeholder */
+    border-radius: 50%;
+    margin: 0 auto 15px;
+}
+
+/* Profile Info */
+.profile-modal-content h3 {
+    font-size: 22px;
+    margin-bottom: 5px;
+}
+
+.profile-modal-content p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+/* Buttons */
+.profile-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.profile-buttons button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+/* Follow Button */
+.follow-btn {
+    background: #007bff;
+    color: white;
+}
+
+.follow-btn:hover {
+    background: #0056b3;
+}
+
+/* Message Button */
+.message-btn {
+    background: #ccc;
+    color: black;
+}
+
+.message-btn:hover {
+    background: #bbb;
+}
+
+/* <----- Profile (20% left of posts) ------>*/
+/*___________________________________________*/
+.level-badge {
+    background: black; /* Gold color */
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 7px 14px;
+    border-radius: 10px;
+    display: inline-block;
+    margin-top: auto;
+    text-transform: uppercase;
+}
+
+/* Adjust colors based on level */
+.level-badge.low {
+    background: #b0b0b0; /* Silver for low levels */
+}
+
+.level-badge.high {
+    background: #ff5733; /* Fiery red for high levels */
+}
+
+.level-number {
+    font-weight: bold;
+}
+
+/* <--- Signed is as: username styling ----> */
+.user-display {
+    display: inline-block;
+    padding: 6px 12px;  /* Match button size */
+    border: 2px solid #d4af37;
+    color: #d4af37;
+    background: linear-gradient(180deg, #222, #000);
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: 14px; /* Match button font size */
+    font-weight: bold;
+    border-radius: 6px;
+    transition: all 0.3s;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.7);
+}
+
+/* Hover Effect */
+.user-display:hover {
+    background: #d4af37;
+    color: #000;
+    box-shadow: 0px 5px 10px rgba(212, 175, 55, 0.8);
+}
+
+/* <------- XP Bar Container -------> */
+/*____________________________________*/
+.xp-bar {
+    width: 100px;
+    height: 8px;
+    background: #333;
+    border-radius: 4px;
+    margin-top: 5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.xp-progress {
+    height: 100%;
+    background: #d4af37;
+    transition: width 0.5s ease-in-out;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .main-content {
+        padding: 20px;
+        max-width: 95%;
+    }
+
+    .main-content h1 {
+        font-size: 2rem;
+    }
+
+    .main-content h2 {
+        font-size: 1.5rem;
+    }
+
+    .main-content p {
+        font-size: 1rem;
+    }
+}
+
+/* Responsive Design for Login/Logout Buttons */
+@media screen and (max-width: 768px) {
+    .nav-buttons {
+        position: fixed;
+        left: 10px;
+        bottom: 10px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+        z-index: 1000;
+    }
+
+    .nav-buttons a {
+        margin-bottom: 0;
+        width: auto;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .sidebar {
+        display: none !important;
+        position: fixed;
+        width: 70%;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        background: #3a7ca5; /* LoL-based light blue color */
+        padding: 20px;
+        z-index: 1000;
+        border-right: 2px solid #dee2e6;
+    }
+
+    .right-sidebar {
+        right: 0;
+        border-left: 2px solid #dee2e6;
+    }
+
+    /* When active, the sidebar appears */
+    .sidebar.active {
+        display: block !important;
+    }
+}

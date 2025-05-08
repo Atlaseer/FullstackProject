@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join MindShare</title>
+    <link rel="stylesheet" href="mainLoginLogic.css">
+</head>
+<body>
+    <div class="container">
+        <h1 id="formTitle">Join Now</h1>
+
+        <!-- Registration Form -->
+        <form id="registerForm" class="auth-form">
+            <input type="text" id="regUsername" placeholder="Username" required>
+            <input type="email" id="regEmail" placeholder="Email" required>
+            <input type="text" id="regFullname" placeholder="Full Name" required>
+            <input type="password" id="regPassword" placeholder="Password" required>
+            <button type="submit">Create Account</button>
+        </form>
+
+        <!-- Login Form (Hidden by Default) -->
+        <form id="loginForm" class="auth-form" style="display: none;">
+            <input type="text" id="loginUsername" placeholder="Username" required>
+            <input type="password" id="loginPassword" placeholder="Password" required>
+            <button type="submit">Sign In</button>
+        </form>
+
+        <!-- Toggle Between Login/Register -->
+        <p id="toggleText">
+            Already have an account? <a href="#" id="toggleMode">Sign In</a>
+        </p>
+
+        <p id="errorMessage" class="error-message"></p>
+    </div>
+
+    <script src="mainLoginLogic.js"></script>
+</body>
+</html>
