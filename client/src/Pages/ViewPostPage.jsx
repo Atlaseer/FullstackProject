@@ -13,10 +13,10 @@ const ViewPostPage = () => {
 
     return (
         <div style={{ padding: "20px" }}>
-            <h2>{post.title}</h2>
-            <p><strong>Category:</strong> {post.category}</p>
-            <p>{post.body}</p>
-            <p><em>By: {post.author}</em></p>
+            <h2>title</h2>
+            <p><strong>Category:</strong> category</p>
+            <p>Hey</p>
+            <p><em>By: Richard</em></p>
       </div>
     )
 }
