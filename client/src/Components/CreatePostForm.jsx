@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { usePosts } from '../contexts/PostContext';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Main.css';
 
@@ -11,7 +10,6 @@ const CreatePostForm = () => {
     const [categories, setCategories] = useState('');
 
     const { user } = useAuth();
-    const { createPost } = usePosts();
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -25,7 +23,6 @@ const CreatePostForm = () => {
             author: user?.username || 'anonymous',
         };
 
-        createPost(post)
         navigate('/');
     }
 

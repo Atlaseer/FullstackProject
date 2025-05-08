@@ -7,6 +7,7 @@ const CreatePostPage = () => {
         <div className="create-post-page">
             <h1>Create a New Post</h1>
             <CreatePostForm />
+            <Footer />
         </div>
     );
 }

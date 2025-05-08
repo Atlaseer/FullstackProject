@@ -9,6 +9,7 @@ import FourOFourPage from './Pages/FourOFour'
 import HomePage from './Pages/HomePage'
 import CreatePostPage from './Pages/CreatePagePost'
 import PrivateRoute from './routes/PrivateRoute'
+import ViewPostPage from './Pages/ViewPostPage'
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
             <CreatePostPage />
           </PrivateRoute>
           } />
+        <Route path="/post/:id" element={<ViewPostPage/>} />
         <Route path="*" element={<FourOFourPage />} />
       </Routes>
     </BrowserRouter>
