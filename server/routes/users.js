@@ -74,7 +74,7 @@ router.get('/id/:id', async (req, res) => {
     }
 });
 
-// (Optional) lookup by username
+//lookup by username
 router.get('/username/:username', async (req, res) => {
     try {
         const user = await User.findOne({ username: req.params.username })
