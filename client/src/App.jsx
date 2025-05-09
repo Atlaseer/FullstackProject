@@ -14,6 +14,7 @@ import { useAuth } from './contexts/AuthContext'
 
 
 import LoginPage from './Pages/LoginPage'
+import AdminPage from './Pages/AdminPage'
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/newpost" element={<CreatePostPage/>} />
         <Route path="/post/:id" element={<ViewPostPage/>} />
+        <Route path="/admin" element={<AdminPage/>} />
         <Route path="*" element={<FourOFourPage />} />
       </Routes>
       <Footer/>
