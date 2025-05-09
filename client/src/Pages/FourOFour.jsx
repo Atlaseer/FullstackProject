@@ -1,6 +1,22 @@
+import React from 'react';
+import Sidebar from '../Components/Sidebar';
+import Footer from '../Components/Footer';
+import '../styles/Main.css';
+
 const FourOFourPage = () => {
     return(
-        <h1>404 Could not find page</h1>
+        <div className="homepage-container">
+      <main className="homepage-main">
+        <Sidebar />
+        <div className="post-list">
+          <div className="not-found-card">
+            <h1>404 - Page Not Found</h1>
+            <p>The page you're looking for doesn't exist or has been moved.</p>
+            <a href="/" className="back-home-link">← Back to Home</a>
+          </div>
+        </div>
+      </main>
+    </div>
     )
 }
 

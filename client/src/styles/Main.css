@@ -312,3 +312,40 @@ td {
 .theme-switch input:checked + .slider:before {
   transform: translateX(24px);
 }
+
+.not-found-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  padding: 40px;
+  border-radius: 6px;
+  text-align: center;
+  color: var(--text-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.not-found-card h1 {
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+
+.not-found-card p {
+  font-size: 16px;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+}
+
+.back-home-link {
+  color: var(--button-bg);
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.2s;
+}
+
+.back-home-link:hover {
+  color: var(--button-bg-hover);
+}
+
+
+h1, h2, h3, h4, h5, h6{
+  color: var(--text-color);
+}
