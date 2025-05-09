@@ -5,6 +5,7 @@ import Navbar from './Navbar';
 
 import { useAuth } from '../contexts/AuthContext';
 
+
 const Header = () => {
     const { user } = useAuth();
 
