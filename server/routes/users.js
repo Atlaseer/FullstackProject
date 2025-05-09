@@ -52,13 +52,37 @@ router.post('/', async (req, res) => {
             password,
             firstName,
             lastName,
-        });     
-        
+        });
+
         await user.save();
         res.status(201).send(user);
 
     } catch (error) {
-        res.status(500).send({error: `Server Error: ${error.message}`});
+        res.status(500).send({ error: `Server Error: ${error.message}` });
+    }
+});
+
+// Get a user by ID (hides password)
+router.get('/id/:id', async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id)
+            .select('-password');
+        if (!user) return res.status(404).json({ message: 'User not found' });
+        res.status(200).json(user);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+//lookup by username
+router.get('/username/:username', async (req, res) => {
+    try {
+        const user = await User.findOne({ username: req.params.username })
+            .select('-password');
+        if (!user) return res.status(404).json({ message: 'No such user' });
+        res.status(200).json(user);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
     }
 });
 
