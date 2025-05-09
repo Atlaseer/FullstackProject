@@ -13,6 +13,8 @@ import LoadingPage from './Pages/LoadingPage'
 import { useAuth } from './contexts/AuthContext'
 
 
+import LoginPage from './Pages/LoginPage'
+
 function App() {
 
   const {loading} = useAuth()
@@ -25,7 +27,7 @@ function App() {
       <Header/>
       <Routes>
         <Route path="/" element={<HomePage />} />
-
+        <Route path="/login" element={<LoginPage />} />
         <Route path="/newpost" element={<CreatePostPage/>} />
         <Route path="/post/:id" element={<ViewPostPage/>} />
         <Route path="*" element={<FourOFourPage />} />
