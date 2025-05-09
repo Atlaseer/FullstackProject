@@ -10,6 +10,6 @@ const postSchema = new mongoose.Schema(
     content: { type: String, required: true },
     tags: { type: [String], ref: "Tag" },
     categories: { type: [String], ref: "Category" },
-
+    author: { type: String, required: true}
     }
     );
