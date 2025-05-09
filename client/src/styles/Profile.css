@@ -74,4 +74,7 @@
   color: var(--text-muted);
 }
 
-  
+.profile-holder
+{
+  min-height:80dvh;
+}

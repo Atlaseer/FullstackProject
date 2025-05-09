@@ -21,17 +21,20 @@ const Profile = () => {
     if (!user) return <p>Loading…</p>;
 
     return (
-        <div className="profile-container">
-            <header className="profile-header">
-                <h1>{user.firstName} {user.lastName}</h1>
-            </header>
-            <div className="profile-body">
-                <p><strong>Username:</strong> {user.username}</p>
-                <p><strong>Email:</strong> {user.email}</p>
-                {user.bio && <p><strong>Bio:</strong> {user.bio}</p>}
-                <p className="joined">
-                    Joined on {new Date(user.createdAt).toLocaleDateString()}
-                </p>
+        <div className='profile-holder'>
+
+            <div className="profile-container">
+                <header className="profile-header">
+                    <h1>{user.firstName} {user.lastName}</h1>
+                </header>
+                <div className="profile-body">
+                    <p><strong>Username:</strong> {user.username}</p>
+                    <p><strong>Email:</strong> {user.email}</p>
+                    {user.bio && <p><strong>Bio:</strong> {user.bio}</p>}
+                    <p className="joined">
+                        Joined on {new Date(user.createdAt).toLocaleDateString()}
+                    </p>
+                </div>
             </div>
         </div>
     );
