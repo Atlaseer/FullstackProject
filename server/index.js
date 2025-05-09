@@ -4,9 +4,11 @@ import cors from 'cors';
 import bcrypt from 'bcrypt';
 import path from 'path';
 import dotenv from 'dotenv';
+
 import userRoutes from './routes/users.js';
 //import postRoutes from './routes/posts.js';
 //import commentRoutes from './routes/comments.js';
+import authRoutes from './routes/auth.js';
 
 import ip from 'ip'; // Importing the ip module to get the local IP address
 
@@ -22,6 +24,8 @@ app.use(express.json());
 
 app.use('/api/users', userRoutes);
 //app.use('/api/posts', postRoutes);
+app.use('/api/auth', authRoutes);
+
 
 app.get('/', (req, res) =>{
     res.send('Server is running...')
