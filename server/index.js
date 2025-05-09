@@ -8,6 +8,8 @@ import userRoutes from './routes/users.js';
 //import postRoutes from './routes/posts.js';
 //import commentRoutes from './routes/comments.js';
 
+import ip from 'ip'; // Importing the ip module to get the local IP address
+
 dotenv.config();
 
 const app = express();
@@ -30,11 +32,14 @@ app.get('/api/message', (req, res)=>{
     res.json({message:'Message from backend'})
 })
 
+const ipAddress = ip.address(); // Get the local IP address
+
 mongoose.connect(process.env.MONGO_URI)
     .then(()=>{
         console.log('Connected to MongoDB')
         app.listen(PORT, ()=>{
             console.log(`Server is running on port http://localhost:${PORT}`)
+            console.log(`Server is running on http://${ipAddress}:${PORT}`); // Log the local IP address
         });
     })
     .catch(err => {
