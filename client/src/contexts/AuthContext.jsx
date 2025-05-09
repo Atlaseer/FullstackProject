@@ -6,43 +6,60 @@ export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true); // loading while checking session
+  const [loading, setLoading] = useState(true); // For session check on mount
 
-  // Check session on app load
+  // Check session on load
   useEffect(() => {
-    fetch('http://localhost:3000/api/auth/me', {
-      credentials: 'include' // Required for cookies
-    })
-      .then(res => res.ok ? res.json() : null)
-      .then(data => {
-        if (data?.username) setUser(data);
+    const checkSession = async () => {
+      try {
+        const res = await fetch('http://localhost:3000/api/auth/me', {
+          credentials: 'include',
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          if (data?.username) {
+            setUser(data);
+          }
+        }
+      } catch (err) {
+        console.error('Failed to check auth:', err);
+      } finally {
         setLoading(false);
-      })
-      .catch(() => setLoading(false));
+      }
+    };
+
+    checkSession();
   }, []);
 
+  // Login function
   const login = async (username, password) => {
     const res = await fetch('http://localhost:3000/api/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      credentials: 'include', // enable cookies
-      body: JSON.stringify({ username, password })
+      credentials: 'include',
+      body: JSON.stringify({ username, password }),
     });
 
     if (!res.ok) {
-      const err = await res.text();
-      throw new Error(err);a
+      const errText = await res.text();
+      throw new Error(errText || 'Login failed');
     }
 
     const userData = await res.json();
     setUser(userData);
   };
 
+  // Logout function
   const logout = async () => {
-    await fetch('http://localhost:3000/api/auth/logout', {
-      method: 'POST',
-      credentials: 'include'
-    });
+    try {
+      await fetch('http://localhost:3000/api/auth/logout', {
+        method: 'POST',
+        credentials: 'include',
+      });
+    } catch (err) {
+      console.error('Logout failed:', err);
+    }
     setUser(null);
   };
 
