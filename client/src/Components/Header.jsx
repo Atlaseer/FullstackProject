@@ -1,9 +1,10 @@
 import { FaSearch, FaUserCircle } from 'react-icons/fa';
 import React from 'react';
-import '../styles/Header.css';
+
 import Navbar from './Navbar';
 
 import { useAuth } from '../contexts/AuthContext';
+import ThemeToggle from './ThemeToggle';
 
 
 const Header = () => {
@@ -21,7 +22,7 @@ const Header = () => {
                   className="search-input"
                 />
             </div>
-
+            <ThemeToggle/>
             <Navbar/>
             <div className="forum-user">
             <FaUserCircle className="user-icon" />
