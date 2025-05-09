@@ -9,7 +9,7 @@ const AdminPage = () => {
 
     const navigate = useNavigate();
     const [users, setUsers] = useState([]);
-    const [error, setError] = useState('fart');
+    const [error, setError] = useState('');
 
   return (
     <div className='homepage-container'>

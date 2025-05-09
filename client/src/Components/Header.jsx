@@ -5,6 +5,7 @@ import Navbar from './Navbar';
 
 import { useAuth } from '../contexts/AuthContext';
 import ThemeToggle from './ThemeToggle';
+import { Link } from 'react-router-dom';
 
 
 const Header = () => {
@@ -12,7 +13,7 @@ const Header = () => {
 
     return(
         <header className='forum-header'>
-            <div className='forum-logo'>FoodLovers</div>
+            <div className='forum-logo'><Link to="/"><h2>FoodLovers</h2></Link></div>
 
             <div className="forum-search">
                 <FaSearch className="search-icon" />
