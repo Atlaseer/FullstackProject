@@ -23,7 +23,7 @@ const Header = () => {
 
             <Navbar/>
             <div className="forum-user">
-                <FaUserCircle className="user-icon" />
+            <FaUserCircle className="user-icon" />
                 <span className="user-name">{user ? user.username : 'Not Signed in'}</span>
             </div>
         </header>

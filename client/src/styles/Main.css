@@ -116,3 +116,21 @@
     background-color: #155ab6;
   }
   
+
+.txt-error
+{
+  color: hsl(0, 86%, 37%);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th{
+  border-bottom: 1px solid #ccc;
+}
+td {
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+}
