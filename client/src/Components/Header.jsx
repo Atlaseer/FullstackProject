@@ -3,7 +3,11 @@ import React from 'react';
 import '../styles/Header.css';
 import Navbar from './Navbar';
 
+import { useAuth } from '../contexts/AuthContext';
+
 const Header = () => {
+    const { user } = useAuth();
+
     return(
         <header className='forum-header'>
             <div className='forum-logo'>FoodLovers</div>
@@ -19,8 +23,8 @@ const Header = () => {
 
             <Navbar/>
             <div className="forum-user">
-                <FaUserCircle className="user-icon" />
-                <span className="user-name">Username</span>
+            <FaUserCircle className="user-icon" />
+                <span className="user-name">{user ? user.username : 'Not Signed in'}</span>
             </div>
         </header>
     )

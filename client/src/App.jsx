@@ -4,18 +4,37 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Header from './Components/Header'
+import Footer from './Components/Footer'
 import FourOFourPage from './Pages/FourOFour'
+import HomePage from './Pages/HomePage'
+import CreatePostPage from './Pages/CreatePagePost'
+import ViewPostPage from './Pages/ViewPostPage'
+import LoadingPage from './Pages/LoadingPage'
+import { useAuth } from './contexts/AuthContext'
 
+
+import LoginPage from './Pages/LoginPage'
+import AdminPage from './Pages/AdminPage'
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const {loading} = useAuth()
+
+  if(loading)
+    return <LoadingPage/>
 
   return (
     <BrowserRouter>
       <Header/>
       <Routes>
-        <Route path="/" element={<FourOFourPage />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/newpost" element={<CreatePostPage/>} />
+        <Route path="/post/:id" element={<ViewPostPage/>} />
+        <Route path="/admin" element={<AdminPage/>} />
+        <Route path="*" element={<FourOFourPage />} />
       </Routes>
+      <Footer/>
     </BrowserRouter>
   )
 }
