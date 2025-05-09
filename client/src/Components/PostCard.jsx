@@ -1,6 +1,7 @@
 import React from 'react';
 import '../styles/Main.css';
 import { Link } from 'react-router-dom';
+import StarRating from './StarRating';
 
 const PostCard = ({ post }) => {
   return (
@@ -10,6 +11,7 @@ const PostCard = ({ post }) => {
         <span>By {post.author}</span>
         <span>{post.replies || 0} replies</span>
       </div>
+      <StarRating stars={post.stars}/>
     </div>
   );
 };

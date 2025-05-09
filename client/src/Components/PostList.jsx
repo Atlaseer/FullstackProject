@@ -3,9 +3,9 @@ import PostCard from './PostCard';
 import '../styles/Main.css';
 
 const samplePosts = [
-  { id: 1, title: "Welcome to the Forum!", author: "Admin", replies: 10 },
-  { id: 2, title: "How do I reset my password?", author: "User123", replies: 4 },
-  { id: 3, title: "New features coming soon", author: "Moderator", replies: 8 },
+  { id: 1, title: "Welcome to the Forum!", author: "Admin", replies: 10, stars: 4.5 },
+  { id: 2, title: "How do I reset my password?", author: "User123", replies: 4, stars: 3.0 },
+  { id: 3, title: "New features coming soon", author: "Moderator", replies: 8, stars: 5.0 },  
 ];
 
 const PostList = () => {

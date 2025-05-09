@@ -134,3 +134,16 @@ td {
   padding: 8px;
   border-bottom: 1px solid #eee;
 }
+
+.star
+{
+  color: hsl(60, 100%, 50%);
+  background: hsla(0, 0%, 0%, 0.5);
+}
+
+.rating-stars
+{
+  display:flex;
+  flex-direction: row;
+  gap:2px;
+}
