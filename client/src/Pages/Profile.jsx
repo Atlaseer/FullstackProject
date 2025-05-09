@@ -8,7 +8,7 @@ const Profile = () => {
     const [err, setErr] = useState('');
 
     useEffect(() => {
-        fetch(`/api/users/username/${username}`, { credentials: 'include' })
+        fetch(`http://localhost:3000/api/users/username/${username}`, { credentials: 'include' })
             .then(res => {
                 if (!res.ok) throw new Error(res.statusText || 'Failed to load');
                 return res.json();

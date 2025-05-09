@@ -1,2 +1,5 @@
 
 
+*{
+  transition: 250ms ease-in-out;
+}
