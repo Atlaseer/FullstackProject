@@ -9,9 +9,16 @@ import FourOFourPage from './Pages/FourOFour'
 import HomePage from './Pages/HomePage'
 import CreatePostPage from './Pages/CreatePagePost'
 import ViewPostPage from './Pages/ViewPostPage'
+import LoadingPage from './Pages/LoadingPage'
+import { useAuth } from './contexts/AuthContext'
 
 
 function App() {
+
+  const {loading} = useAuth()
+
+  if(loading)
+    return <LoadingPage/>
 
   return (
     <BrowserRouter>
