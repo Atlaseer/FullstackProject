@@ -25,6 +25,37 @@ const UserMenu = () =>
             {
                 setOpen(false);
             }
-        }
+            if (e.type === 'keydown' && e.key === 'Escape') 
+            {
+                setOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleOutsideClick);
+        return() => document.removeEventListener('mousedown', handleOutsideClick);
     })
-}
+
+    return (
+    <div className="user-dropdown-wrapper" ref={menuRef}>
+      <button
+        className="user-dropdown-button"
+        onClick={() => setOpen((prev) => !prev)}
+      >
+        <FaUserCircle className="user-icon" />
+        <span className="user-name">{user?.username}</span>
+        <FaChevronDown className="dropdown-chevron" />
+      </button>
+
+      {open && (
+        <div className="user-dropdown-menu">
+          <Link to={`/profile/${user?.username}`} onClick={() => setOpen(false)}>
+            Profile
+          </Link>
+          <button onClick={handleLogout}>Sign Out</button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default UserMenu;

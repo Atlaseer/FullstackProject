@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
 import ThemeToggle from './ThemeToggle';
 import { useAuth } from '../contexts/AuthContext';
+import UserMenu from './UserMenu';
 
 
 const Header = () => {
@@ -25,10 +26,7 @@ const Header = () => {
             <Navbar/>
             <div className="forum-user">
                 {user ? (
-                    <Link to={`/profile/${user?.username}`}>
-                        <FaUserCircle className="user-icon" />
-                        <span className="user-name">{user?.username}</span>
-                    </Link>
+                    <UserMenu/>
                 ) : 
                     <div className="auth-buttons">
                         <Link to="/login" className="auth-link">Sign In</Link>
