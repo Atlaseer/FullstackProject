@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import axios from 'axios';
 
 const AuthContext = createContext();
 
@@ -6,60 +7,34 @@ export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true); // For session check on mount
+  const [loading, setLoading] = useState(true);
 
-  // Check session on load
   useEffect(() => {
-    const checkSession = async () => {
-      try {
-        const res = await fetch('http://localhost:3000/api/auth/me', {
-          credentials: 'include',
-        });
-
-        if (res.ok) {
-          const data = await res.json();
-          if (data?.username) {
-            setUser(data);
-          }
-        }
-      } catch (err) {
-        console.error('Failed to check auth:', err);
-      } finally {
-        setLoading(false);
+    axios.get('http://localhost:3000/api/auth/me', {
+      withCredentials: true,
+    })
+    .then((res) => {
+      if (res.data.username) {
+        setUser(res.data);
       }
-    };
-
-    checkSession();
+    })
+    .catch(() => {})
+    .finally(() => setLoading(false));
   }, []);
 
-  // Login function
   const login = async (username, password) => {
-    const res = await fetch('http://localhost:3000/api/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
-      body: JSON.stringify({ username, password }),
-    });
-
-    if (!res.ok) {
-      const errText = await res.text();
-      throw new Error(errText || 'Login failed');
-    }
-
-    const userData = await res.json();
-    setUser(userData);
+    const res = await axios.post(
+      'http://localhost:3000/api/auth/login',
+      { username, password },
+      { withCredentials: true }
+    );
+    setUser(res.data); // ← This must trigger re-render
   };
 
-  // Logout function
   const logout = async () => {
-    try {
-      await fetch('http://localhost:3000/api/auth/logout', {
-        method: 'POST',
-        credentials: 'include',
-      });
-    } catch (err) {
-      console.error('Logout failed:', err);
-    }
+    await axios.post('http://localhost:3000/api/auth/logout', {}, {
+      withCredentials: true,
+    });
     setUser(null);
   };
 

@@ -1,11 +1,9 @@
-import { FaSearch, FaUserCircle } from 'react-icons/fa';
 import React from 'react';
-
-import Navbar from './Navbar';
-
-import { useAuth } from '../contexts/AuthContext';
-import ThemeToggle from './ThemeToggle';
+import { FaSearch, FaUserCircle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import Navbar from './Navbar';
+import ThemeToggle from './ThemeToggle';
+import { useAuth } from '../contexts/AuthContext';
 
 
 const Header = () => {
@@ -26,8 +24,17 @@ const Header = () => {
             <ThemeToggle/>
             <Navbar/>
             <div className="forum-user">
-            <FaUserCircle className="user-icon" />
-                <span className="user-name">{user ? user.username : 'Not Signed in'}</span>
+                {user ? (
+                    <Link to={`/profile/${user?.username}`}>
+                        <FaUserCircle className="user-icon" />
+                        <span className="user-name">{user?.username}</span>
+                    </Link>
+                ) : 
+                    <div className="auth-buttons">
+                        <Link to="/login" className="auth-link">Sign In</Link>
+                        <Link to="/signup" className="auth-link">Register</Link>
+                    </div>
+                }
             </div>
         </header>
     )
