@@ -109,7 +109,7 @@ cd FullstackProject
 
 **Install dependencies**
 ```bash
-cd sever && npm install
+cd server && npm install
 cd client && npm install
 cd ..
 npm install
