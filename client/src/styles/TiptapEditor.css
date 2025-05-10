@@ -1,36 +1,46 @@
 .tiptap-editor-wrapper {
-    border: 1px solid var(--border-color);
-    background: var(--bg-card);
-    border-radius: 6px;
-    padding: 10px;
-    min-height: 200px;
-  }
-  
-  .editor-toolbar {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-    margin-bottom: 8px;
-  }
-  
-  .editor-toolbar button {
-    padding: 6px 12px;
-    background: var(--bg-footer);
-    color: var(--text-color);
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-  
-  .editor-toolbar button:hover {
-    background-color: var(--button-bg);
-    color: white;
-  }
-  
-  .editor-toolbar button.active {
-    background-color: var(--button-bg);
-    color: white;
-  }
-  
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background-color: var(--bg-card);
+  padding: 12px;
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Menu bar styling */
+.tiptap-editor-wrapper .menu-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* Tiptap content area */
+.tiptap-editor-wrapper .ProseMirror {
+  min-height: 200px;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--bg-main);
+  color: var(--text-color);
+  outline: none;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+/* List spacing fix */
+.tiptap-editor-wrapper .ProseMirror ul,
+.tiptap-editor-wrapper .ProseMirror ol {
+  padding-left: 1.5rem;
+}
+
+/* Dark mode tweaks */
+.dark .tiptap-editor-wrapper {
+  background-color: var(--bg-card);
+}
+
+.dark .tiptap-editor-wrapper .ProseMirror {
+  background-color: var(--bg-main);
+  color: var(--text-color);
+}

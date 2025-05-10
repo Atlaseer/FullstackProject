@@ -195,6 +195,12 @@ td {
   font-family: sans-serif;
   color: var(--text-color);
 }
+.forum-seperate-part
+{
+  display: flex;
+  flex-direction: row;
+  gap:20px;
+}
 
 .forum-logo {
   font-size: 24px;
@@ -210,6 +216,8 @@ td {
   border-radius: 20px;
   width: 300px;
   border: 1px solid var(--border-color);
+  height:32px;
+  align-self: center;
 }
 
 .search-icon {
@@ -254,6 +262,46 @@ td {
   color: var(--link-hover);
   font-weight: bold;
   text-decoration: underline;
+}
+
+.editor-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.editor-toolbar {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.editor-content {
+  min-height: 200px;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--bg-card);
+  color: var(--text-color);
+  font-size: 1rem;
+  line-height: 1.5;
+  outline: none;
+}
+
+/* Fix bullet/numbered lists */
+.editor-content ul,
+.editor-content ol {
+  padding-left: 1.5rem;
+}
+
+/* Reset borders */
+.ProseMirror {
+  outline: none;
+}
+
+/* Optional hover/focus style */
+.editor-content:focus-within {
+  border-color: var(--link-hover);
 }
 
 
