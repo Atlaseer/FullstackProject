@@ -1,37 +1,76 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import PostCard from './PostCard';
 import '../styles/Main.css';
 
 import axios from 'axios';
 
+const LIMIT = 10;
+
 const PostList = () => {
   const [posts, setPosts] = useState([]);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const observer = useRef();
   
-  useEffect(() =>{
-    axios.get('http://localhost:3000/api/posts', {withCredentials:true})
-    .then((res) => {
-      setPosts(res.data);
-      setLoading(false);
-    })
-    .catch((err) => {
-      console.error('Failed to load posts: ', err);
-      setError("Could not load posts.");
-      setLoading(false);
-    })
-  }, []);
+    // Fetch posts
+    const fetchPosts = async () => {
+      if (loading || !hasMore) return;
+  
+      setLoading(true);
+      setError(null);
+  
+      try {
+        const res = await axios.get(`http://localhost:3000/api/posts?page=${page}&limit=${LIMIT}`, {
+          withCredentials: true
+        });
+  
+        if (res.data.length < LIMIT) setHasMore(false);
+        setPosts((prev) => [...prev, ...res.data]);
+        setPage((prev) => prev + 1);
+      } catch (err) {
+        setError('Could not load posts');
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    useEffect(() => {
+      fetchPosts();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
+    // Infinite Scroll observer
+    const lastPostRef = useCallback((node) => {
+      if (loading) return;
+      if(observer.current) observer.current.disconnect();
 
+      observer.current = new IntersectionObserver((entries) =>
+      {
+        if(entries[0].isIntersecting && hasMore)
+        {
+          fetchPosts();
+        }
+      });
+
+      if(node) observer.current.observe(node);
+    }, [loading, hasMore])
   return (
     <section className="post-list">
       <h2>Latest Posts</h2>
-      {loading && <p>Loading posts...</p>}
+      {posts.map((post, index) => {
+        const isLast = index === posts.length - 1;
+        return (
+          <div ref={isLast ? lastPostRef : null} key={post._id}>
+            <PostCard post={post} />
+          </div>
+        );
+      })}
+
+      {loading && <p>Loading more...</p>}
       {error && <p className="txt-error">{error}</p>}
-      {!loading && !error && posts.length === 0 && <p>No posts available.</p>}
-      {posts.map((post) => (
-        <PostCard key={post._id || post.id} post={post} />
-      ))}
+      {!hasMore && <p>No more posts to load.</p>}
     </section>
   );
 };

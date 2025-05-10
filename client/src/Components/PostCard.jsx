@@ -8,10 +8,10 @@ const PostCard = ({ post }) => {
     <div className="post-card">
       <h3> <Link to={`/post/${post.id}`}>{post.title} </Link></h3>
       <div className="post-meta">
-        <span>By {post.author}</span>
-        <span>{post.replies || 0} replies</span>
+        <span>By {post.user}</span>
+        <span>{post.comments || 0} comments</span>
       </div>
-      <StarRating stars={post.stars}/>
+      <StarRating stars={post.averageRating}/>
     </div>
   );
 };

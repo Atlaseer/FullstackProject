@@ -15,15 +15,27 @@ router.post('/', async (req, res) => {
     }
 })
 
-//Gets all posts
+
+// Gets paginated posts
 router.get('/', async (req, res) => {
     try {
-        const posts = await Post.find().populate('user', 'username').populate('comments');
-        res.status(200).json(posts);
+      const page = parseInt(req.query.page) || 1;      // default to page 1
+      const limit = parseInt(req.query.limit) || 10;   // default to 10 per page
+      const skip = (page - 1) * limit;
+  
+      const posts = await Post.find()
+        .sort({ createdAt: -1 }) // newest first
+        .skip(skip)
+        .limit(limit)
+        .populate('user', 'username')
+        .populate('comments');
+  
+      res.status(200).json(posts);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+      res.status(500).json({ error: error.message });
     }
-})
+  });
+  
 
 //Gets post by ID
 router.get('/:id', async (req, res) => {
