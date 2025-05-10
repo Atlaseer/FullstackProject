@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import PostCard from './PostCard';
 import '../styles/Main.css';
 
@@ -9,68 +10,66 @@ const LIMIT = 10;
 const PostList = () => {
   const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const observer = useRef();
+  const [totalPosts, setTotalPosts] = useState(0);
+  const [error, setError] = useState('');
   
-    // Fetch posts
-    const fetchPosts = async () => {
-      if (loading || !hasMore) return;
-  
-      setLoading(true);
-      setError(null);
-  
-      try {
-        const res = await axios.get(`http://localhost:3000/api/posts?page=${page}&limit=${LIMIT}`, {
-          withCredentials: true
-        });
-  
-        if (res.data.length < LIMIT) setHasMore(false);
-        setPosts((prev) => [...prev, ...res.data]);
-        setPage((prev) => prev + 1);
-      } catch (err) {
-        setError('Could not load posts');
-      } finally {
-        setLoading(false);
-      }
-    };
-  
-    useEffect(() => {
-      fetchPosts();
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    // Infinite Scroll observer
-    const lastPostRef = useCallback((node) => {
-      if (loading) return;
-      if(observer.current) observer.current.disconnect();
-
-      observer.current = new IntersectionObserver((entries) =>
-      {
-        if(entries[0].isIntersecting && hasMore)
-        {
-          fetchPosts();
-        }
+  const fetchData = async (page) => {
+    try {
+      const res = await axios.get(`http://localhost:3000/api/posts?page=${page}&limit=${LIMIT}`, {
+        withCredentials: true
       });
 
-      if(node) observer.current.observe(node);
-    }, [loading, hasMore])
+      if (res.status === 200) {
+        setPosts((prev) => [...prev, ...res.data]);
+        if (page === 1) {
+          // Optionally, total count could come from a separate endpoint or response metadata
+          const total = res.data.length < LIMIT ? res.data.length : LIMIT * 2; // fallback
+          setTotalPosts(total);
+        }
+      }
+    } catch (err) {
+      console.error(err);
+      setError('Could not load posts');
+    }
+  };
+    
+  
+  useEffect(() => {
+    let mounted = true;
+    if (mounted) {
+      fetchData(1);
+    }
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const loadMore = () =>
+  {
+    const nextPage = page + 1;
+    fetchData(nextPage);
+    setPage(nextPage);
+  }
+
   return (
     <section className="post-list">
       <h2>Latest Posts</h2>
-      {posts.map((post, index) => {
-        const isLast = index === posts.length - 1;
-        return (
-          <div ref={isLast ? lastPostRef : null} key={post._id}>
+
+      {error && <p className="txt-error">{error}</p>}
+
+      <InfiniteScroll
+        dataLength={posts.length}
+        next={loadMore}
+        hasMore={posts.length < totalPosts}
+        loader={<p>Loading more...</p>}
+        endMessage={<p>No more posts to load.</p>}
+      >
+        {posts.map((post) => (
+          <div key={post._id}>
             <PostCard post={post} />
           </div>
-        );
-      })}
-
-      {loading && <p>Loading more...</p>}
-      {error && <p className="txt-error">{error}</p>}
-      {!hasMore && <p>No more posts to load.</p>}
+        ))}
+      </InfiniteScroll>
     </section>
   );
 };

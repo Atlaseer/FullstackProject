@@ -6,9 +6,9 @@ import StarRating from './StarRating';
 const PostCard = ({ post }) => {
   return (
     <div className="post-card">
-      <h3> <Link to={`/post/${post.id}`}>{post.title} </Link></h3>
+      <h3> <Link to={`/post/${post._id}`}>{post.title} </Link></h3>
       <div className="post-meta">
-        <span>By {post.user}</span>
+        <span>By {post.user?.username || 'Unkown'}</span>
         <span>{post.comments || 0} comments</span>
       </div>
       <StarRating stars={post.averageRating}/>
