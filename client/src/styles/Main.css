@@ -365,3 +365,15 @@ h1, h2, h3, h4, h5, h6{
   cursor: pointer;
   color: gold;
 }
+
+.post-content {
+  white-space: pre-wrap;
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: var(--bg-card);
+  padding: 10px;
+  border-radius: 6px;
+  margin-top: 1rem;
+}
