@@ -1,5 +1,5 @@
 import express from 'express';
-import Post from '.models/Post.js'
+import Post from '../models/Post.js'
 
 const router = express.Router();
 
@@ -54,3 +54,4 @@ router.put('/:id', async (req, res) => {
     }
 })
 
+export default router;
