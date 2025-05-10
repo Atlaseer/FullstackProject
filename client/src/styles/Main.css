@@ -349,3 +349,19 @@ td {
 h1, h2, h3, h4, h5, h6{
   color: var(--text-color);
 }
+
+.rating-stars {
+  display: flex;
+  gap: 2px;
+}
+
+.star {
+  font-size: 1.2rem;
+  color: #ccc;
+}
+
+.star-wrapper:hover .star,
+.star.active {
+  cursor: pointer;
+  color: gold;
+}
