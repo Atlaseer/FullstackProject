@@ -23,7 +23,7 @@ This project uses the following technologies:
 FullstackProject/
 ├──	client/
 │	├── public/ # Static resource directory
-		└──
+│	│		└── vite.svg
 │	├── src/ # Source code directory
 │	│ 	├── assets/ # Images, icons and other resources
 │	│ 	│ 	└── react.svg
