@@ -19,8 +19,8 @@ router.post('/', async (req, res) => {
         }
 
         //Checks is username and email are valid
-        if (!/^[a-zA-Z0-9]+$/.test(username)) {
-            return res.status(422).send({ error: 'Username can only contain letters and numbers' });
+        if (!/^[a-zA-Z0-9]+$/.test(username) || username.length < 3 || username.length > 20) {
+            return res.status(422).send({ error: 'Username must be 3-20 characters and can only contain letters and numbers' });
         }
         if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
             return res.status(422).send({ error: 'Invalid email format' });
