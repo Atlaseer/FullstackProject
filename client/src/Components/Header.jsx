@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
 import ThemeToggle from './ThemeToggle';
 import { useAuth } from '../contexts/AuthContext';
+import { FaPlus } from "react-icons/fa";
 import UserMenu from './UserMenu';
 
 
@@ -32,7 +33,7 @@ const Header = () => {
             <div className="forum-user">
                 {user ? (
                     <div>
-                     <Link to="/newpost" className="auth-link">Create</Link>
+                     <Link to="/newpost" className="auth-link"><FaPlus/> Create</Link>
                     <UserMenu/>
                     </div>
                 ) : 
