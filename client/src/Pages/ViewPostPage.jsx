@@ -1,62 +1,87 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import Sidebar from '../Components/Sidebar';
 import StarRating from '../Components/StarRating';
 import { useAuth } from '../contexts/AuthContext';
-
+import '../styles/Main.css';
 
 const ViewPostPage = () => {
-    const { id } = useParams();
-    const { user } = useAuth();
+  const { id } = useParams();
+  const { user } = useAuth();
 
-    const [post, setPost] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState('');
+  const [post, setPost] = useState(null);
+  const [rating, setRating] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
-    useEffect(() => {
-        axios.get(`http://localhost:3000/api/posts/${id}`, { withCredentials: true })
-        .then((res) => {
-            setPost(res.data);
-            setRating(res.data.rating || 0); // assuming your post model includes `rating`
-      setLoading(false);
-        })
-        .catch((err) => {
-            setError('Post not found.');
-            setLoading(false);
-        });
-    }, [id]);
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3000/api/posts/${id}`, { withCredentials: true })
+      .then((res) => {
+        setPost(res.data);
+        setRating(res.data.averageRating || 0);
+        setLoading(false);
+      })
+      .catch(() => {
+        setError('Post not found.');
+        setLoading(false);
+      });
+  }, [id]);
 
-    const handleRatingChange = async (newRating) => {
-        try {
-          setRating(newRating);
-          await axios.post(`http://localhost:3000/api/posts/${id}/rate`, {
-            rating: newRating
-          }, { withCredentials: true });
-        } catch (err) {
-          console.error('Failed to set rating', err);
-        }
-    };
+  const handleRatingChange = async (newRating) => {
+    try {
+      setRating(newRating);
+      const res = await axios.post(
+        `http://localhost:3000/api/posts/${id}/rate`,
+        { rating: newRating },
+        { withCredentials: true }
+      );
 
-    
-    if (loading) return <div style={{ padding: '20px' }}>Loading post...</div>;
-    if (error) return <div style={{ padding: '20px' }}>{error}</div>;
+      setPost((prev) => ({
+        ...prev,
+        averageRating: res.data.averageRating,
+        totalRatings: res.data.totalRatings,
+      }));
+    } catch (err) {
+      console.error('Failed to rate post', err);
+    }
+  };
 
-    return (
-        <div style={{ padding: "20px" }}>
-            <h2>{post.title}</h2>
-            <p><strong>Category:</strong> {post.categories?.join(', ') || 'None'}</p>
-            <p>{post.content}</p>
-            <p>
+  return (
+    <div className="homepage-container">
+      <main className="homepage-main">
+        <Sidebar />
+        <div className="post-list">
+          {loading ? (
+            <div className="not-found-card"><p>Loading post...</p></div>
+          ) : error ? (
+            <div className="not-found-card"><p>{error}</p></div>
+          ) : (
+            <div className="post-card">
+              <h2>{post.title}</h2>
+              <p className="post-meta">
+                <strong>Category:</strong> {post.categories?.join(', ') || 'None'}
+              </p>
+              <p>{post.content}</p>
+              <p className="post-meta">
                 <em>
-                By: {post.user?.username || 'Unknown'}{' '}
-                <StarRating
-                  rating={rating}
-                  onRate={user ? handleRatingChange : null}
-                />
+                  By: {post.user?.username || 'Unknown'}{' '}
+                  <StarRating
+                    stars={rating}
+                    onRate={user ? handleRatingChange : null}
+                  />
+                  <span style={{ fontSize: '0.85rem', marginLeft: '8px' }}>
+                    {post.totalRatings || 0} {post.totalRatings === 1 ? 'rating' : 'ratings'}
+                  </span>
                 </em>
-            </p>
-      </div>
-    )
-}
+              </p>
+            </div>
+          )}
+        </div>
+      </main>
+    </div>
+  );
+};
 
 export default ViewPostPage;
