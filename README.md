@@ -120,6 +120,7 @@ Create a .env in the backend directory with:
 ```bash
 PORT=3000
 MONGO_URI=<your MongoDB Atlas connection string>
+JWT_SECRET=<your JWT secret here>
 ```
 **Start the application**
 
