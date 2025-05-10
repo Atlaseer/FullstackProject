@@ -14,8 +14,8 @@ router.post('/', async (req, res) => {
         const password = req.body.password;
         const firstName = req.body.firstName?.trim();
         const lastName = req.body.lastName?.trim();
-        if (!username || !email) {
-            return res.status(400).send({ error: 'Username and email are required' });
+        if (!username || !email || !password || ! firstName || ! lastName) {
+            return res.status(400).send({ error: 'All fields are required' });
         }
 
         //Checks is username and email are valid
