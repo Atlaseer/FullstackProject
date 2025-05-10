@@ -15,6 +15,7 @@ import { useAuth } from './contexts/AuthContext'
 
 import LoginPage from './Pages/LoginPage'
 import AdminPage from './Pages/AdminPage'
+import Profile from './Pages/Profile'
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/profile/:username" element={<Profile/>} />
         <Route path="/newpost" element={<CreatePostPage/>} />
         <Route path="/post/:id" element={<ViewPostPage/>} />
         <Route path="/admin" element={<AdminPage/>} />
