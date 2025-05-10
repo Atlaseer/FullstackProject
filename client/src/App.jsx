@@ -16,6 +16,10 @@ import { useAuth } from './contexts/AuthContext'
 import LoginPage from './Pages/LoginPage'
 import AdminPage from './Pages/AdminPage'
 import Profile from './Pages/Profile'
+import GeneralPage from './Pages/GeneralPage'
+import AnnouncementsPage from './Pages/AnnouncementsPage'
+import SupportPage from './Pages/SupportPage'
+import OffTopicPage from './Pages/OffTopicPage'
 
 function App() {
 
@@ -35,6 +39,10 @@ function App() {
         <Route path="/post/:id" element={<ViewPostPage/>} />
         <Route path="/admin" element={<AdminPage/>} />
         <Route path="*" element={<FourOFourPage />} />
+        <Route path="/general" element={<GeneralPage />} />
+        <Route path="/announcements" element={<AnnouncementsPage />} />
+        <Route path="/support" element={<SupportPage />} />
+        <Route path="/off-topic" element={<OffTopicPage />} />
       </Routes>
       <Footer/>
     </BrowserRouter>
