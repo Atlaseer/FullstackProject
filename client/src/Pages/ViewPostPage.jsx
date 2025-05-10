@@ -5,11 +5,14 @@ import Sidebar from '../Components/Sidebar';
 import StarRating from '../Components/StarRating';
 import { useAuth } from '../contexts/AuthContext';
 import '../styles/Main.css';
+import PostContent from '../Components/PostContent';
 
 const ViewPostPage = () => {
   const { id } = useParams();
   const { user } = useAuth();
 
+
+  
   const [post, setPost] = useState(null);
   const [rating, setRating] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -63,7 +66,7 @@ const ViewPostPage = () => {
               <p className="post-meta">
                 <strong>Category:</strong> {post.categories?.join(', ') || 'None'}
               </p>
-              <div dangerouslySetInnerHTML={{ __html: post.content }} />
+              <PostContent content={post.content}/>
               <p className="post-meta">
                 <em>
                   By: {post.user?.username || 'Unknown'}{' '}
