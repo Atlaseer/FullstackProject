@@ -178,15 +178,11 @@ td {
   border-bottom: 1px solid var(--border-color);
 }
 
-.star {
-  color: yellow;
-}
 
 .rating-stars {
   display: flex;
   flex-direction: row;
   gap: 2px;
-  background: hsla(0, 0%, 20%, 0.158);
 }
 
 .forum-header {
@@ -346,7 +342,7 @@ td {
 }
 
 
-h1, h2, h3, h4, h5, h6{
+h1, h2, h3, h4, h5, h6, label, p{
   color: var(--text-color);
 }
 
@@ -357,7 +353,7 @@ h1, h2, h3, h4, h5, h6{
 
 .star {
   font-size: 1.2rem;
-  color: #ccc;
+  color: var(--text-muted);
 }
 
 .star-wrapper:hover .star,

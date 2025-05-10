@@ -63,7 +63,7 @@ const ViewPostPage = () => {
               <p className="post-meta">
                 <strong>Category:</strong> {post.categories?.join(', ') || 'None'}
               </p>
-              <pre className='post-content'>{post.content}</pre>
+              <div dangerouslySetInnerHTML={{ __html: post.content }} />
               <p className="post-meta">
                 <em>
                   By: {post.user?.username || 'Unknown'}{' '}

@@ -1,18 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useEditor, EditorContent } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
 import '../styles/Main.css';
+import '../styles/TiptapEditor.css'; // Optional: custom styles for dark/light
+import MenuBar from './MenuBar'
 
 const CreatePostForm = () => {
   const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
   const [tags, setTags] = useState('');
   const [categories, setCategories] = useState('');
   const [error, setError] = useState('');
-
   const { user } = useAuth();
   const navigate = useNavigate();
+
+  const [htmlContent, setHtmlContent] = useState('');
+
+  const editor = useEditor({
+    extensions: [StarterKit],
+    content: '',
+    onUpdate: ({ editor }) => {
+      setHtmlContent(editor.getHTML());
+    },
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,7 +35,7 @@ const CreatePostForm = () => {
         'http://localhost:3000/api/posts',
         {
           title,
-          content,
+          content: htmlContent,
           tags: tags.split(',').map(tag => tag.trim()).filter(Boolean),
           categories: categories.split(',').map(cat => cat.trim()).filter(Boolean)
         },
@@ -55,12 +67,10 @@ const CreatePostForm = () => {
 
       <label>
         Content:
-        <textarea
-          rows="6"
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          required
-        />
+        <div className="tiptap-editor-wrapper">
+          <MenuBar editor={editor} />
+          <EditorContent editor={editor} />
+        </div>
       </label>
 
       <label>

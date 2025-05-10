@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { ImStarFull, ImStarHalf, ImStarEmpty } from "react-icons/im";
-import "../styles/Main.css"; // optional if needed
+import "../styles/Main.css";
 
 const StarRating = ({ stars = 0, onRate = null }) => {
   const [hoverRating, setHoverRating] = useState(null);
-
   const effectiveRating = hoverRating !== null ? hoverRating : stars;
 
   const handleMouseEnter = (value) => {
@@ -19,46 +18,37 @@ const StarRating = ({ stars = 0, onRate = null }) => {
     if (onRate) onRate(value);
   };
 
-  const renderStar = (value) => {
-    if (effectiveRating >= value) return <ImStarFull key={value} className="star" />;
-    if (effectiveRating >= value - 0.5) return <ImStarHalf key={value} className="star" />;
-    return <ImStarEmpty key={value} className="star" />;
+  const renderStarIcon = (index) => {
+    const value = index + 1;
+
+    if (effectiveRating >= value) return <ImStarFull />;
+    if (effectiveRating >= value - 0.5) return <ImStarHalf />;
+    return <ImStarEmpty />;
   };
 
-  // For clickable stars, we use half-step values (1, 1.5, 2, ..., 5)
-  const starElements = [];
-  for (let i = 1; i <= 5; i++) {
-    const fullValue = i;
-    const halfValue = i - 0.5;
+  const starElements = Array.from({ length: 5 }, (_, index) => {
+    const value = index + 1;
 
     if (onRate) {
-      starElements.push(
+      return (
         <span
-          key={halfValue}
+          key={value}
           className="star-wrapper"
-          onMouseEnter={() => handleMouseEnter(halfValue)}
+          onMouseEnter={() => handleMouseEnter(value)}
           onMouseLeave={handleMouseLeave}
-          onClick={() => handleClick(halfValue)}
+          onClick={() => handleClick(value)}
         >
-          {renderStar(halfValue)}
+          {renderStarIcon(index)}
         </span>
       );
-      starElements.push(
-        <span
-          key={fullValue}
-          className="star-wrapper"
-          onMouseEnter={() => handleMouseEnter(fullValue)}
-          onMouseLeave={handleMouseLeave}
-          onClick={() => handleClick(fullValue)}
-        >
-          {renderStar(fullValue)}
-        </span>
-      );
-    } else {
-      // Non-interactive display
-      starElements.push(renderStar(fullValue));
     }
-  }
+
+    return (
+      <span key={value} className="star-wrapper">
+        {renderStarIcon(index)}
+      </span>
+    );
+  });
 
   return <div className="rating-stars">{starElements}</div>;
 };

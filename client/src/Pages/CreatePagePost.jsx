@@ -8,7 +8,9 @@ const CreatePostPage = () => {
         <div className='homepage-container'>
             <main className="homepage-main">
                 <Sidebar />
-                <CreatePostForm/>
+                <div className="post-list">
+                    <CreatePostForm />
+                </div>
             </main>
 
         </div>
