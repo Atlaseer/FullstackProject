@@ -22,7 +22,8 @@ const postSchema = new mongoose.Schema({
     averageRating: { type: Number, default: 0 },
     totalRatings: { type: Number, default: 0 },
     totalComments: { type: Number, default: 0 },
-    totalLikes: { type: Number, default: 0 }
+    totalLikes: { type: Number, default: 0 },
+    views: { type: Number, default: 0 }
 
   },
 
@@ -36,6 +37,11 @@ postSchema.methods.updateAverageRating = function () {
   } else {
     this.averageRating = 0;
   }
+};
+
+postSchema.methods.incrementViews = function () {
+  this.views = (this.views || 0) + 1;
+  return this.save();
 };
 
 const Post = mongoose.model('Post', postSchema);

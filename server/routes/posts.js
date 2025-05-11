@@ -93,12 +93,12 @@ router.get('/', async (req, res) => {
 //Gets post by ID
 router.get('/:id', async (req, res) => {
   try {
-    const post = await Post.findById(req.params.id).populate('user', 'username').populate('comments')
+    const post = await Post.findById(req.params.id).populate('user', 'username').populate('comments');
     if (!post) return res.status(404).json({ message: 'Post not found' });
+    await post.incrementViews();
     res.status(200).json(post);
-
   } catch (error) {
-    res.status(500).json({ error: error.message })
+    res.status(500).json({ error: error.message });
   }
 })
 
