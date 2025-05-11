@@ -12,13 +12,17 @@ import authRoutes from './routes/auth.js';
 
 import ip from 'ip'; // Importing the ip module to get the local IP address
 import cookieParser from 'cookie-parser';
-
+import { fileURLToPath } from 'url'; // 用于ES模块中获取__dirname
 dotenv.config();
 
 const app = express();
 
 
-
+// ES模块中获取__dirname的方法
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+// 配置静态文件目录
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 const PORT = process.env.PORT || 3000;
 
@@ -26,19 +30,16 @@ const allowedOrigins = ['http://localhost:5173', 'http://localhost']
 
 //Middleware
 app.use(cors({
-    origin: (origin, callback) =>
-    {
-        if(!origin || allowedOrigins.includes(origin))
-        {
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin)) {
             callback(null, true);
         }
-        else
-        {
+        else {
             callback(new Error("Not allowed by CORS"))
         }
     },
-    credentials:true
-  }));
+    credentials: true
+}));
 app.use(cookieParser());
 app.use(express.json());
 
@@ -47,21 +48,21 @@ app.use('/api/posts', postRoutes);
 app.use('/api/auth', authRoutes);
 
 
-app.get('/', (req, res) =>{
+app.get('/', (req, res) => {
     res.send('Server is running...')
 })
 
-app.get('/api/message', (req, res)=>{
+app.get('/api/message', (req, res) => {
     //console.log('Message is retrieved from backend')
-    res.json({message:'Message from backend'})
+    res.json({ message: 'Message from backend' })
 })
 
 const ipAddress = ip.address(); // Get the local IP address
 
 mongoose.connect(process.env.MONGO_URI)
-    .then(()=>{
+    .then(() => {
         console.log('Connected to MongoDB')
-        app.listen(PORT, ()=>{
+        app.listen(PORT, () => {
             console.log(`Server is running on port http://localhost:${PORT}`)
             console.log(`Server is running on http://${ipAddress}:${PORT}`); // Log the local IP address
         });
