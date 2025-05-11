@@ -1,58 +1,67 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import '../styles/Main.css'; // or create Login.css if preferred
+import '../styles/Main.css';
 
 const LoginPage = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
-
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [form, setForm] = useState({ username: '', password: '' });
   const [error, setError] = useState('');
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setError('');
+  const handleChange = useCallback((e) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+  }, []);
 
-    try {
-      await login(username, password);
-      navigate('/');
-    } catch (err) {
-      setError(err.message || 'Login failed');
-    }
-  };
+  const handleLogin = useCallback(
+    async (e) => {
+      e.preventDefault();
+      setError('');
+      try {
+        await login(form.username, form.password);
+        navigate('/');
+      } catch (err) {
+        setError(err.message || 'Login failed');
+      }
+    },
+    [form, login, navigate]
+  );
 
   return (
     <div className="create-post-page">
       <h2>Login</h2>
-      <form className="create-post-form" onSubmit={handleLogin}>
+      <form className="create-post-form" onSubmit={handleLogin} autoComplete="on">
         {error && <p className="txt-error">{error}</p>}
-
         <label>
           Username:
           <input
             type="text"
-            value={username}
+            name="username"
+            value={form.username}
             required
-            onChange={(e) => setUsername(e.target.value)}
+            autoComplete="username"
+            onChange={handleChange}
           />
         </label>
-
         <label>
           Password:
           <input
             type="password"
-            value={password}
+            name="password"
+            value={form.password}
             required
-            onChange={(e) => setPassword(e.target.value)}
+            autoComplete="current-password"
+            onChange={handleChange}
           />
         </label>
-
         <input type="submit" value="Sign In" className="form-submit-button" />
       </form>
       <div className="register-footer">
-        <p>Don't have an account? <Link to="/signup">Click here to Sign Up!</Link></p>
+        <p>
+          Don't have an account?{' '}
+          <Link to="/signup">Click here to Sign Up!</Link>
+        </p>
       </div>
     </div>
   );
