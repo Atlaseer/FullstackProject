@@ -14,7 +14,7 @@ router.post('/', async (req, res) => {
         const password = req.body.password;
         const firstName = req.body.firstName?.trim();
         const lastName = req.body.lastName?.trim();
-        if (!username || !email || !password || ! firstName || ! lastName) {
+        if (!username || !email || !password || !firstName || !lastName) {
             return res.status(400).send({ error: 'All fields are required' });
         }
 
@@ -65,7 +65,7 @@ router.post('/', async (req, res) => {
 // Get a user by ID (hides password)
 router.get('/id/:id', async (req, res) => {
     try {
-        const user = await User.findById(req.params.id)
+        const user = await User.findOne({ _id: req.params.id })
             .select('-password');
         if (!user) return res.status(404).json({ message: 'User not found' });
         res.status(200).json(user);
