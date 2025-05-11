@@ -1,55 +1,57 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import React, { useEffect, useState, useCallback } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Sidebar from '../Components/Sidebar';
-import StarRating from '../Components/StarRating';
 import { useAuth } from '../contexts/AuthContext';
 import '../styles/Main.css';
-import PostContent from '../Components/PostContent';
+import PostComments from '../Components/PostComments';
+import PostDetails from '../Components/PostDetails';
 
 const ViewPostPage = () => {
   const { id } = useParams();
   const { user } = useAuth();
-
-
-  
   const [post, setPost] = useState(null);
   const [rating, setRating] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
   useEffect(() => {
+    let isMounted = true;
     axios
       .get(`http://localhost:3000/api/posts/${id}`, { withCredentials: true })
       .then((res) => {
+        if (!isMounted) return;
         setPost(res.data);
         setRating(res.data.averageRating || 0);
         setLoading(false);
       })
       .catch(() => {
+        if (!isMounted) return;
         setError('Post not found.');
         setLoading(false);
       });
+    return () => { isMounted = false; };
   }, [id]);
 
-  const handleRatingChange = async (newRating) => {
+  const handleRatingChange = useCallback(async (newRating) => {
+    setRating(newRating);
     try {
-      setRating(newRating);
       const res = await axios.post(
         `http://localhost:3000/api/posts/${id}/rate`,
         { rating: newRating },
         { withCredentials: true }
       );
-
       setPost((prev) => ({
         ...prev,
         averageRating: res.data.averageRating,
         totalRatings: res.data.totalRatings,
       }));
     } catch (err) {
+      // Optionally show error to user
+      setRating(post?.averageRating || 0);
       console.error('Failed to rate post', err);
     }
-  };
+  }, [id, post]);
 
   return (
     <div className="homepage-container">
@@ -61,29 +63,10 @@ const ViewPostPage = () => {
           ) : error ? (
             <div className="not-found-card"><p>{error}</p></div>
           ) : (
-            <div className="post-card">
-              <h2>{post.title}</h2>
-              <p className="post-meta">
-                <strong>Category:</strong> {post.categories?.join(', ') || 'None'}
-              </p>
-              <PostContent content={post.content}/>
-              <p className="post-meta">
-                <em>
-                  By: {post.user?.username ? (
-                    <>
-                      <Link to={`/profile/${post.user.username}`}>{post.user.username}</Link>
-                    </>
-                  ) : 'Unknown'}{' '}
-                  <StarRating
-                    stars={rating}
-                    onRate={user ? handleRatingChange : null}
-                  />
-                  <span style={{ fontSize: '0.85rem', marginLeft: '8px' }}>
-                    {post.totalRatings || 0} {post.totalRatings === 1 ? 'rating' : 'ratings'}
-                  </span>
-                </em>
-              </p>
-            </div>
+            <>
+              <PostDetails post={post} user={user} rating={rating} handleRatingChange={handleRatingChange} />
+              <PostComments postId={post._id} comments={post.comments} user={user} />
+            </>
           )}
         </div>
       </main>
