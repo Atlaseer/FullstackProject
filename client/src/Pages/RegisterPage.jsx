@@ -111,7 +111,7 @@ const RegisterPage = () => {
       </form>
 
       <div className="register-footer">
-        Already registered? <Link to="/login">Click here to log in</Link>
+        <p>Already registered? <Link to="/login">Click here to log in</Link></p>
       </div>
     </div>
   );

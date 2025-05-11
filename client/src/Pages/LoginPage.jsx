@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import '../styles/Main.css'; // or create Login.css if preferred
 
@@ -49,8 +49,11 @@ const LoginPage = () => {
           />
         </label>
 
-        <button type="submit">Login</button>
+        <input type="submit" value="Sign In" className="form-submit-button" />
       </form>
+      <div className="register-footer">
+        <p>Don't have an account? <Link to="/signup">Click here to Sign Up!</Link></p>
+      </div>
     </div>
   );
 };
