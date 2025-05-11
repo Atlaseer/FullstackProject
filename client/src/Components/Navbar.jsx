@@ -1,21 +1,32 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
-const Navbar = () => {
-    return (
-        <nav className="navbar">
-        <ul className="navbar_links">
-            <li>
-            <Link to="/">Home</Link>
-            </li>
-            <li>
-            <Link to="/about">About</Link>
-            </li>
-            <li>
-            <Link to="/contact">Contact</Link>
-            </li>
-        </ul>
-        </nav>
-    );
-}
+const navLinks = [
+  { to: "/", label: "Home", exact: true },
+  { to: "/about", label: "About" },
+];
+
+const Navbar = ({ currentPath }) => {
+  return (
+    <nav className="navbar">
+      <ul className="navbar_links">
+        {navLinks.map((link) => (
+          <li key={link.to}>
+            <NavLink
+              to={link.to}
+              className={({ isActive }) =>
+                isActive || (link.exact && currentPath === link.to)
+                  ? "active-navbar-link"
+                  : undefined
+              }
+              end={!!link.exact}
+            >
+              {link.label}
+            </NavLink>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+};
 
 export default Navbar;

@@ -264,6 +264,12 @@ td {
   text-decoration: underline;
 }
 
+.active-navbar-link {
+  color: var(--button-bg);
+  font-weight: bold;
+  text-decoration: underline;
+}
+
 .editor-container {
   display: flex;
   flex-direction: column;

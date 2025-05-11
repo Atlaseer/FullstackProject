@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaSearch, FaUserCircle } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Navbar from './Navbar';
 import ThemeToggle from './ThemeToggle';
 import { useAuth } from '../contexts/AuthContext';
@@ -10,6 +10,7 @@ import UserMenu from './UserMenu';
 
 const Header = () => {
     const { user } = useAuth();
+    const location = useLocation();
 
     return(
         <header className='forum-header'>
@@ -28,7 +29,7 @@ const Header = () => {
             <div className='forum-seperate-part'>
 
             <ThemeToggle/>
-            <Navbar/>
+            <Navbar currentPath={location.pathname}/>
             </div>
             <div className="forum-user">
                 {user ? (

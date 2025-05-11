@@ -1,8 +1,7 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import PostCard from './PostCard';
 import '../styles/Main.css';
-
 import axios from 'axios';
 
 const LIMIT = 10;
@@ -12,52 +11,44 @@ const PostList = () => {
   const [page, setPage] = useState(1);
   const [totalPosts, setTotalPosts] = useState(0);
   const [error, setError] = useState('');
-  const hasFetchedInitial = useRef(false); // prevent duplicate fetch
-  
-  const fetchData = async (pageNum) => {
+  const hasFetchedInitial = useRef(false);
+
+  const fetchData = useCallback(async (pageNum) => {
     try {
       const res = await axios.get(
         `http://localhost:3000/api/posts?page=${pageNum}&limit=${LIMIT}`,
         { withCredentials: true }
       );
-
-      if (res.status === 200) 
-      {
-        setPosts((prev) => [...prev, ...res.data]);
-        if (pageNum === 1)
-        {
-          const total = res.data.length < LIMIT ? res.data.length : LIMIT * 2;
-          setTotalPosts(total);
+      if (res.status === 200) {
+        // If backend returns {posts, total}, use that. Otherwise, fallback to res.data.length
+        const data = Array.isArray(res.data) ? res.data : res.data.posts || [];
+        setPosts((prev) => pageNum === 1 ? data : [...prev, ...data]);
+        if (pageNum === 1) {
+          setTotalPosts(res.data.total || data.length);
         }
       }
-    } 
-    catch (err) 
-    {
-      console.error(err);
+    } catch (err) {
       setError('Could not load posts');
-    }
-  };
-
-  useEffect(() => {
-    if (!hasFetchedInitial.current) 
-    {
-      hasFetchedInitial.current = true;
-      fetchData(1);
     }
   }, []);
 
-  const loadMore = () => {
+  useEffect(() => {
+    if (!hasFetchedInitial.current) {
+      hasFetchedInitial.current = true;
+      fetchData(1);
+    }
+  }, [fetchData]);
+
+  const loadMore = useCallback(() => {
     const nextPage = page + 1;
     setPage(nextPage);
     fetchData(nextPage);
-  };
+  }, [page, fetchData]);
 
   return (
     <section className="post-list">
       <h2>Latest Posts</h2>
-
       {error && <p className="txt-error">{error}</p>}
-
       <InfiniteScroll
         dataLength={posts.length}
         next={loadMore}

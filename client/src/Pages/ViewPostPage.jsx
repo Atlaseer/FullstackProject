@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import Sidebar from '../Components/Sidebar';
 import StarRating from '../Components/StarRating';
@@ -69,7 +69,11 @@ const ViewPostPage = () => {
               <PostContent content={post.content}/>
               <p className="post-meta">
                 <em>
-                  By: {post.user?.username || 'Unknown'}{' '}
+                  By: {post.user?.username ? (
+                    <>
+                      <Link to={`/profile/${post.user.username}`}>{post.user.username}</Link>
+                    </>
+                  ) : 'Unknown'}{' '}
                   <StarRating
                     stars={rating}
                     onRate={user ? handleRatingChange : null}
