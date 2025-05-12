@@ -29,6 +29,7 @@ router.post('/', verifyToken, async (req, res)=> {
 
         await newComment.save();
 
+        //Updates the comment count to the post
         post.totalComments = (post.totalComments || 0) +1
         await post.save();
 

@@ -9,27 +9,26 @@ const router = express.Router();
 router.post('/login', async (req, res) => {
     const { username, password } = req.body;
 
-    if(!username || !password)
-    {
+    //Validates username and password
+    if(!username || !password) {
         return res.status(400).json({error: 'Username and password required'});
     }
 
+    //Finds user by username
     const user = await User.findOne({username});
-    if(!user)
-    {
+    if(!user) {
         return res.status(401).json({error: 'Invalid credentials'});
     }
     
+    //Verifies password
     const valid = await bcrypt.compare(password, user.password);
-    if(!valid)
-    {
+    if (!valid) {
         return res.status(401).json({error: 'Invalid credentials'});
     }
 
     // If JWT_SECRET is not set, run the generateJWT_SecretONCE.mjs file to get a code for it
 
-    const token = jwt.sign(
-        {
+    const token = jwt.sign({
             id: user._id,
             username: user.username
         },
@@ -47,32 +46,26 @@ router.post('/login', async (req, res) => {
     res.json({message: 'Login successful', token, user: {username: user.username, id: user._id}})
 })
 
-
-
+//Get user info from token
 router.get('/me', (req, res) => {
     const token = req.cookies.token;
 
-    if(!token)
-    {
+    if(!token) {
         return res.status(401).json({error: 'Not logged in'});
     }
 
-    try 
-    {
+    try {
         const user = jwt.verify(token, process.env.JWT_SECRET);
         res.json(user);
     }
-    catch(error)
-    {
+    catch(error) {
         res.status(403).json({error: 'Invalid or expired token'});
     }
 })
-
 
 router.post('/logout', (req, res) => {
     res.clearCookie('token');
     res.json({message: 'Logout successful'});
 })
-
 
 export default router;
