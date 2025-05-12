@@ -56,7 +56,8 @@ route.get('/', async (req, res) => {
     }
 })
 
-router.put('/', verifyToken, async (req, res) => {
+//Edit a comment by ID, if authorized
+router.put('/:id', verifyToken, async (req, res) => {
     try {
         const { id } = req.params
         const { content } = req.body;
@@ -83,3 +84,34 @@ router.put('/', verifyToken, async (req, res) => {
         res.status(500).json({ error: 'Server Error: ${error.message}' });
     }
 })
+
+
+//Delete a comment by ID
+router.delete('/:id', verifyToken, async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const comment = await Comment.findById(id);
+
+        if (!comment){
+            return res.status(404).json({ error: 'Comment not found'})
+        }
+
+        if(comment.user.toString() !== req.user.id) {
+            return res.status(403).json({ error: 'Not authorized to delete this comment'});
+        }
+
+        await comment.remove();
+
+        const post = await Post.findById(comment.post);
+        if (post) {
+            post.totalComments = (Math.max((post.totalComments || 1) - 1, 0));
+            await post.save();
+        }
+
+    } catch (error) {
+        res.status(500).json({ error: 'An unexpected error occured' });
+    }
+})
+
+export default router;
