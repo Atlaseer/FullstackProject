@@ -12,16 +12,16 @@ import authRoutes from './routes/auth.js';
 
 import ip from 'ip'; // Importing the ip module to get the local IP address
 import cookieParser from 'cookie-parser';
-import { fileURLToPath } from 'url'; // 用于ES模块中获取__dirname
+import { fileURLToPath } from 'url'; // Used to get __dirname in ES module
 dotenv.config();
 
 const app = express();
 
 
-// ES模块中获取__dirname的方法
+// How to get __dirname in ES module
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-// 配置静态文件目录
+// Configure static file directory
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 const PORT = process.env.PORT || 3000;
