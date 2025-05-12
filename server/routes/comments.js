@@ -50,9 +50,36 @@ route.get('/', async (req, res) => {
 
         const comments = await Comment.find({ post: postId }).populate('user', 'username');
         res.status(200).json(comments);
-
     } catch (error){
         res.status(500).json({ error: 'Server Error: ${error.message}' });
 
+    }
+})
+
+router.put('/', verifyToken, async (req, res) => {
+    try {
+        const { id } = req.params
+        const { content } = req.body;
+
+        if (!content){
+            return res.status(400).json({ error: 'Content is required'});
+        }
+
+        const comment = await Comment.findById(id);
+        if (!comment){
+            return res.status(404).json({ error: 'Comment not found'});
+        }
+
+        if (comment.user.toString() !== req.user.id){
+            return res.status(403).json({ error: 'Not authorized to edit this comment'});
+        }
+
+        comment.content.save();
+        await comment.save()
+
+        res.status(200).json(comment);
+
+    } catch (error) {
+        res.status(500).json({ error: 'Server Error: ${error.message}' });
     }
 })
