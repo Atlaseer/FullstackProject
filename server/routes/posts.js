@@ -5,8 +5,8 @@ import jwt from 'jsonwebtoken';
 
 const router = express.Router();
 
-
 // Middleware to require login from JWT in cookies
+//Only authorized users may acces certain routes
 const requireAuth = (req, res, next) => {
   const token = req.cookies.token;
   if (!token) return res.status(401).json({ error: 'Not authenticated' });
@@ -20,6 +20,7 @@ const requireAuth = (req, res, next) => {
   }
 };
 
+// Lets authenticated users to post
 // POST /api/posts/:id/rate
 router.post('/:id/rate', requireAuth, async (req, res) => {
   const { rating } = req.body;
@@ -108,10 +109,16 @@ router.get('/', async (req, res) => {
 
 
 //Gets post by ID
+//Increments view count
 router.get('/:id', async (req, res) => {
   try {
-    const post = await Post.findById(req.params.id).populate('user', 'username').populate('comments');
+    const post = await Post.findById(req.params.id)
+    .populate('user', 'username')
+    .populate('comments');
+
     if (!post) return res.status(404).json({ message: 'Post not found' });
+
+    //Increments view count
     await post.incrementViews();
     res.status(200).json(post);
   } catch (error) {
@@ -123,24 +130,31 @@ router.get('/:id', async (req, res) => {
 router.put('/:id', requireAuth, upload.single('coverImage'), async (req, res) => {
   try {
     const { title, content, tags, categories } = req.body;
+
     // Prepare to update data
     const updateData = { 
       title, 
       content, 
-      tags: tags ? (typeof tags === 'string' ? tags.split(',').map(tag => 
-      tag.trim()).filter(Boolean) : tags) : undefined,
-      categories: categories ? (typeof categories === 'string' ? 
-      categories.split(',').map(cat => cat.trim()).filter(Boolean) : categories) : 
-      undefined
+      tags: tags 
+      ? (typeof tags === 'string' 
+        ? tags.split(',').map(tag => tag.trim()).filter(Boolean) 
+        : tags) 
+        : undefined,
+      categories: categories 
+      ? (typeof categories === 'string' 
+        ? categories.split(',').map(cat => cat.trim()).filter(Boolean) 
+        : categories) 
+        : undefined
     };
-    // If you uploaded a new cover image, add the image path
+    // Adds new image path if uploaded
     if (req.file) {
       updateData.coverImage = `/uploads/${req.file.filename}`;
     }
+
     const updatedPost = await Post.findByIdAndUpdate(
       req.params.id,
       updateData,
-      { new: true }
+      { new: true } // Returns updated document
     );
     if (!updatedPost) return res.status(404).json({ message: 'Post not found' });
     res.status(200).json(updatedPost);
@@ -151,6 +165,7 @@ router.put('/:id', requireAuth, upload.single('coverImage'), async (req, res) =>
 })
 
 //Delete a post by ID
+//Requires authentication
 router.delete('/:id', requireAuth, async (req, res) => {
   try {
     const deletedPost = await Post.findByIdAndDelete(req.params.id);
