@@ -37,3 +37,22 @@ router.post('/', verifyToken, async (req, res)=> {
         res.status(500).json({ error: 'Server Error: ${error.message}' });
     }
 })
+
+//Get all comments for a post by postID
+route.get('/', async (req, res) => {
+    try {
+        const {postId} = req.params;
+
+        //Validates postID
+        if (!postId){
+            return res.status(400).json({ error: 'Post ID required'})
+        }
+
+        const comments = await Comment.find({ post: postId }).populate('user', 'username');
+        res.status(200).json(comments);
+
+    } catch (error){
+        res.status(500).json({ error: 'Server Error: ${error.message}' });
+
+    }
+})
