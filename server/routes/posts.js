@@ -1,6 +1,7 @@
 import express from 'express';
 import Post from '../models/Post.js'
 import jwt from 'jsonwebtoken';
+ import upload from '../middlewares/upload.js';
 
 const router = express.Router();
 
@@ -56,17 +57,33 @@ router.post('/:id/rate', requireAuth, async (req, res) => {
   }
 });
 
-//Creates new post
-router.post('/', async (req, res) => {
+//Creates new post with cover image upload
+router.post('/', requireAuth, upload.single('coverImage'), async (req, res) => {
   try {
-    const { user, title, content, tags, categories } = req.body;
-    const newPost = new Post({ user, title, content, tags, categories });
+    // Get the user ID from the token
+    const userId = req.user.id;
+    const { title, content, tags, categories } = req.body;
+     // Preparing post data
+    const postData = { 
+      user: userId, 
+      title, 
+      content, 
+      tags: tags ? (typeof tags === 'string' ? tags.split(',').map(tag => 
+      tag.trim()).filter(Boolean) : tags) : [],
+      categories: categories ? (typeof categories === 'string' ? 
+      categories.split(',').map(cat => cat.trim()).filter(Boolean) : categories) : []
+    };
+    // If you uploaded a cover image, add the image path
+    if (req.file) {
+      postData.coverImage = `/uploads/${req.file.filename}`;
+    }
+    const newPost = new Post(postData);
     await newPost.save();
     res.status(201).json(newPost);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-})
+});
 
 
 // Gets paginated posts
@@ -103,12 +120,26 @@ router.get('/:id', async (req, res) => {
 })
 
 //Updates post by ID
-router.put('/:id', async (req, res) => {
+router.put('/:id', requireAuth, upload.single('coverImage'), async (req, res) => {
   try {
     const { title, content, tags, categories } = req.body;
+    // Prepare to update data
+    const updateData = { 
+      title, 
+      content, 
+      tags: tags ? (typeof tags === 'string' ? tags.split(',').map(tag => 
+      tag.trim()).filter(Boolean) : tags) : undefined,
+      categories: categories ? (typeof categories === 'string' ? 
+      categories.split(',').map(cat => cat.trim()).filter(Boolean) : categories) : 
+      undefined
+    };
+    // If you uploaded a new cover image, add the image path
+    if (req.file) {
+      updateData.coverImage = `/uploads/${req.file.filename}`;
+    }
     const updatedPost = await Post.findByIdAndUpdate(
       req.params.id,
-      { title, content, tags, categories },
+      updateData,
       { new: true }
     );
     if (!updatedPost) return res.status(404).json({ message: 'Post not found' });
@@ -120,8 +151,7 @@ router.put('/:id', async (req, res) => {
 })
 
 //Delete a post by ID
-
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', requireAuth, async (req, res) => {
   try {
     const deletedPost = await Post.findByIdAndDelete(req.params.id);
     if (!deletedPost) return res.status(404).json({ message: 'Post not found' })
