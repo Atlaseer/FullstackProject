@@ -79,7 +79,7 @@ const CreatePostForm = () => {
       );
 
       // navigate to the newly created post
-      navigate(`/posts/${res.data._id}`);
+      navigate(`/post/${res.data._id}`);
     } catch (err) {
       console.error('Post creation failed:', err);
       setError(err.response?.data?.error || 'Failed to create post.');
