@@ -5,8 +5,8 @@ import StarRating from './StarRating';
 
 const formatNumber = (n) => 
 {
-  if (n >= 1_000_000_000) return (n / 1_000_000_000).toFixed(1).replace(/\.0$/, '') + 'Billion';
-  if (n >= 1_000_000) return (n / 1_000_000).toFixed(1).replace(/\.0$/, '') + 'Million';
+  if (n >= 1_000_000_000) return (n / 1_000_000_000).toFixed(2).replace(/\.0$/, '') + ' Billion';
+  if (n >= 1_000_000) return (n / 1_000_000).toFixed(2).replace(/\.0$/, '') + ' Million';
   return n;
 }
 
