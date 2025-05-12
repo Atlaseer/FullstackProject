@@ -3,3 +3,10 @@
 *{
   transition: 250ms ease-in-out;
 }
+
+.logo-icon {
+  aspect-ratio: 1/1;
+  width: 64px;
+  margin-right: 8px;
+  vertical-align: middle;
+}

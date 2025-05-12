@@ -7,6 +7,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { FaPlus } from "react-icons/fa";
 import UserMenu from './UserMenu';
 
+import logo from '../assets/foodlover_mark_only.svg';
 
 const Header = () => {
     const { user } = useAuth();
@@ -15,7 +16,7 @@ const Header = () => {
     return(
         <header className='forum-header'>
             <div className='forum-seperate-part'>
-                <div className='forum-logo'><Link to="/"><h2>FoodLovers</h2></Link></div>
+                <div className='forum-logo'><Link to="/"><img src={logo} alt="FoodLovers Logo" className="logo-icon" /></Link></div>
 
                 <div className="forum-search">
                     <FaSearch className="search-icon" />
