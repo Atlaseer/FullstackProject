@@ -64,6 +64,15 @@ const ViewPostPage = () => {
             <div className="not-found-card"><p>{error}</p></div>
           ) : (
             <>
+              {post.coverImage && (
+                <div className="post-view-cover">
+                  <img
+                    src={`http://localhost:3000${post.coverImage}`}
+                    alt={`${post.title} Cover image of`}
+                    className="post-view-cover-image"
+                  />
+                </div>
+              )}
               <PostDetails post={post} user={user} rating={rating} handleRatingChange={handleRatingChange} />
               <PostComments postId={post._id} comments={post.comments} user={user} />
             </>
