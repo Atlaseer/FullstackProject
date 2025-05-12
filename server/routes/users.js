@@ -7,7 +7,6 @@ const router = express.Router();
 
 router.post('/', async (req, res) => {
     try {
-        //Check if username or email already exists
 
         const username = req.body.username?.trim();
         const email = req.body.email?.trim();
@@ -18,7 +17,7 @@ router.post('/', async (req, res) => {
             return res.status(400).send({ error: 'All fields are required' });
         }
 
-        //Checks is username and email are valid
+        //Checks is username and email has valid input
         if (!/^[a-zA-Z0-9]+$/.test(username) || username.length < 3 || username.length > 20) {
             return res.status(422).send({ error: 'Username must be 3-20 characters and can only contain letters and numbers' });
         }
@@ -26,11 +25,13 @@ router.post('/', async (req, res) => {
             return res.status(422).send({ error: 'Invalid email format' });
         }
 
+        //Check if username or email already exists
         const existingUser = await User.findOne({ username: req.body.username });
         if (existingUser) {
             return res.status(409).send({ error: 'Username already exists' });
         }
 
+        //Check if username has valid length
         if (username.length < 3 || username.length > 20) {
             return res.status(422).send({ error: 'Username must be between 3 and 20 characters' });
         }
