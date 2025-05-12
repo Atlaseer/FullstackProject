@@ -424,6 +424,7 @@ h1, h2, h3, h4, h5, h6, label, p{
 .rating-stars {
   display: flex;
   gap: 2px;
+  color: var(--text-color);
 }
 
 .star {
@@ -642,4 +643,11 @@ textarea:invalid {
 
 .add-comment-form button:hover:not(:disabled) {
   background: var(--button-bg-hover);
+}
+
+.post-views
+{
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-top: 8px;
 }

@@ -15,6 +15,7 @@ const PostCard = ({ post }) => {
         <span>{post.comments ?? 0} comments</span>
       </div>
       <StarRating stars={post.averageRating || 0} />
+      <span className='post-views'>{post?.views ?? 0} views</span>
     </div>
   );
 };
