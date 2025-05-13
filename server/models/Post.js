@@ -6,8 +6,8 @@ import Comment from './Comment.js';
 //import Tag from "./Tag.js";
 
 const postSchema = new mongoose.Schema({
-  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  createdAt: { type: Date, default: Date.now },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, //References user
+  createdAt: { type: Date, default: Date.now }, //Timestamp for time created at
   title: { type: String, required: true },
   content: { type: String, required: true },
   coverImage: { type: String, default: null },
