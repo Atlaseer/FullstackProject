@@ -12,6 +12,8 @@ const OffTopicPage = () => {
           <div className="not-found-card">
             <h1>🌐 Off topic</h1>
             <p>Welcome to the Off Topic page. Here you can find everything that is unrelated and off topic!</p>
+            
+            <p>(We will be looking to add this feature in the near future.)</p>
           </div>
         </div>
       </main>
