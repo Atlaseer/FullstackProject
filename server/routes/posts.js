@@ -1,7 +1,7 @@
 import express from 'express';
 import Post from '../models/Post.js'
 import jwt from 'jsonwebtoken';
- import upload from '../middlewares/upload.js';
+import upload from '../middlewares/upload.js';
 
 const router = express.Router();
 
@@ -64,15 +64,15 @@ router.post('/', requireAuth, upload.single('coverImage'), async (req, res) => {
     // Get the user ID from the token
     const userId = req.user.id;
     const { title, content, tags, categories } = req.body;
-     // Preparing post data
-    const postData = { 
-      user: userId, 
-      title, 
-      content, 
-      tags: tags ? (typeof tags === 'string' ? tags.split(',').map(tag => 
-      tag.trim()).filter(Boolean) : tags) : [],
-      categories: categories ? (typeof categories === 'string' ? 
-      categories.split(',').map(cat => cat.trim()).filter(Boolean) : categories) : []
+    // Preparing post data
+    const postData = {
+      user: userId,
+      title,
+      content,
+      tags: tags ? (typeof tags === 'string' ? tags.split(',').map(tag =>
+        tag.trim()).filter(Boolean) : tags) : [],
+      categories: categories ? (typeof categories === 'string' ?
+        categories.split(',').map(cat => cat.trim()).filter(Boolean) : categories) : []
     };
     // If you uploaded a cover image, add the image path
     if (req.file) {
@@ -107,14 +107,26 @@ router.get('/', async (req, res) => {
   }
 });
 
+//Gets all posts by a user
+router.get('/user/:userId', async (req, res) => {
+  try {
+    const posts = await Post.find({ user: req.params.userId })
+      .sort({ createdAt: -1 })
+      .populate('user', 'username')
+      .populate('comments');
+    res.status(200).json(posts);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 //Gets post by ID
 //Increments view count
 router.get('/:id', async (req, res) => {
   try {
     const post = await Post.findById(req.params.id)
-    .populate('user', 'username')
-    .populate('comments');
+      .populate('user', 'username')
+      .populate('comments');
 
     if (!post) return res.status(404).json({ message: 'Post not found' });
 
@@ -132,18 +144,18 @@ router.put('/:id', requireAuth, upload.single('coverImage'), async (req, res) =>
     const { title, content, tags, categories } = req.body;
 
     // Prepare to update data
-    const updateData = { 
-      title, 
-      content, 
-      tags: tags 
-      ? (typeof tags === 'string' 
-        ? tags.split(',').map(tag => tag.trim()).filter(Boolean) 
-        : tags) 
+    const updateData = {
+      title,
+      content,
+      tags: tags
+        ? (typeof tags === 'string'
+          ? tags.split(',').map(tag => tag.trim()).filter(Boolean)
+          : tags)
         : undefined,
-      categories: categories 
-      ? (typeof categories === 'string' 
-        ? categories.split(',').map(cat => cat.trim()).filter(Boolean) 
-        : categories) 
+      categories: categories
+        ? (typeof categories === 'string'
+          ? categories.split(',').map(cat => cat.trim()).filter(Boolean)
+          : categories)
         : undefined
     };
     // Adds new image path if uploaded
