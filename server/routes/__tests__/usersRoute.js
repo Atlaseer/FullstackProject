@@ -45,8 +45,9 @@ describe('User routes', () => {
     expect(res.status).toBe(422);
   });
 
+  //Check for existing username
   it('should return error if username exists', async () => {
-    User.findOne.mockResolvedValueOnce({}); // simulate existing user
+    User.findOne.mockResolvedValueOnce({});
     const res = await request(app).post('/api/users').send({
       username: 'testuser',
       email: 'test@test.com',
@@ -57,6 +58,7 @@ describe('User routes', () => {
     expect(res.status).toBe(409);
   });
 
+  //Checks existing email
   it('should return error if email exists', async () => {
     User.findOne
       .mockResolvedValueOnce(null) // username not exists
@@ -72,6 +74,7 @@ describe('User routes', () => {
     expect(res.status).toBe(409);
   });
 
+  //Checks short password
   it('should return error for short password', async () => {
     const res = await request(app).post('/api/users').send({
       username: 'newuser',
@@ -83,10 +86,11 @@ describe('User routes', () => {
     expect(res.status).toBe(422);
   });
 
+  //Checks created user
   it('should create a user', async () => {
     User.findOne
-      .mockResolvedValueOnce(null) // username
-      .mockResolvedValueOnce(null); // email
+      .mockResolvedValueOnce(null)
+      .mockResolvedValueOnce(null);
 
       User.mockImplementation(() => ({
         save: jest.fn().mockResolvedValue({
