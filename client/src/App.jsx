@@ -21,6 +21,7 @@ import AnnouncementsPage from './Pages/AnnouncementsPage'
 import SupportPage from './Pages/SupportPage'
 import OffTopicPage from './Pages/OffTopicPage'
 import RegisterPage from './Pages/RegisterPage'
+import AboutPage from './Pages/AboutPage'
 
 function App() {
 
@@ -45,6 +46,7 @@ function App() {
         <Route path="/support" element={<SupportPage />} />
         <Route path="/off-topic" element={<OffTopicPage />} />
         <Route path='/signup' element={<RegisterPage/>} />
+        <Route path="/about" element={<AboutPage />} />
       </Routes>
       <Footer/>
     </BrowserRouter>
