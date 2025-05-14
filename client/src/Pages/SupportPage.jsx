@@ -12,6 +12,8 @@ const SupportPage = () => {
           <div className="not-found-card">
             <h1>💬 Support</h1>
             <p>Welcome to the support page. Here you will recieve support about any issue you have!</p>
+
+            <p>(We will be looking to add this feature in the near future.)</p>
           </div>
         </div>
       </main>
