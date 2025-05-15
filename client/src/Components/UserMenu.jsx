@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { FaUserCircle, FaChevronDown } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import ThemeToggle from './ThemeToggle';
 
 const UserMenu = () =>
 {
@@ -62,6 +63,7 @@ const UserMenu = () =>
             Profile
           </Link>
           <button onClick={handleLogout} role="menuitem" tabIndex={0}>Sign Out</button>
+          <ThemeToggle />
         </div>
       )}
     </div>

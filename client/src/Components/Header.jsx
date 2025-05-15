@@ -1,29 +1,42 @@
-import React, { useEffect } from 'react';
-import { FaSearch, FaUserCircle } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react';
+import { FaSearch, FaBars, FaTimes, FaPlus } from 'react-icons/fa';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Navbar from './Navbar';
 import ThemeToggle from './ThemeToggle';
-import { useAuth } from '../contexts/AuthContext';
-import { FaPlus } from "react-icons/fa";
 import UserMenu from './UserMenu';
-
+import MobileMenu from './MobileMenu';
+import SearchBar from './SearchBar';
+import { useAuth } from '../contexts/AuthContext';
 import logo from '../assets/foodlover.svg';
-
-const SORT_OPTIONS = [
-  { value: 'alltime', label: 'All Time' },
-  { value: 'monthly', label: 'This Month' },
-  { value: 'daily', label: 'Today' },
-];
-const SORT_BY_OPTIONS = [
-  { value: 'date', label: 'Newest' },
-  { value: 'views', label: 'Most Viewed' },
-];
+import { getStoredTheme, setStoredTheme } from '../utils/theme';
 
 const Header = () => {
     const { user } = useAuth();
     const location = useLocation();
     const navigate = useNavigate ? useNavigate() : null;
-    const [searchText, setSearchText] = React.useState("");
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isMobileView, setIsMobileView] = useState(false);
+    const [searchText, setSearchText] = useState("");
+    const [isDark, setIsDark] = useState(getStoredTheme() === 'dark');
+
+    useEffect(() =>
+    {
+        setStoredTheme(isDark ? 'dark' : 'light');
+    }, [isDark]);
+
+    // Check screen resolution to determine if mobile view is needed
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobileView(window.innerWidth <= 768);
+        };
+
+        handleResize(); // Initial check
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     // Synchronize searchText with the URL's search query parameter
     useEffect(() => {
@@ -54,24 +67,39 @@ const Header = () => {
             </Link>
           </div>
 
-          <div className="forum-search" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            <FaSearch className="search-icon" />
-            <input
-              type="text"
-              placeholder="Search topics..."
-              className="search-input"
-              value={searchText}
-              onChange={e => setSearchText(e.target.value)}
-              onKeyDown={handleSearchKeyDown}
-              style={{ flex: 1, maxWidth: 220, borderRadius: 6, border: '1px solid #ccc', padding: '6px 10px', fontSize: 15 }}
-            />
-           
+          
+        </div>
+        <div>
+
+        {isMobileView ? (
+            <>
+              <button
+                className="mobile-menu-toggle"
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                aria-label="Toggle mobile menu"
+                >
+                {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
+              </button>
+              <MobileMenu
+                isOpen={isMobileMenuOpen}
+                location={location}
+                navigate={navigate}
+                searchText={searchText}
+                setSearchText={setSearchText}
+                handleSearchKeyDown={handleSearchKeyDown}
+                />
+            </>
+          ) : (
+              <>
+              <SearchBar
+                searchText={searchText}
+                setSearchText={setSearchText}
+                handleSearchKeyDown={handleSearchKeyDown}
+                />
+              <Navbar currentPath={location.pathname} />
+            </>
+          )}
           </div>
-        </div>
-        <div className='forum-seperate-part'>
-          <ThemeToggle />
-          <Navbar currentPath={location.pathname} />
-        </div>
         <div className="forum-user">
           {user ? (
             <div>

@@ -194,7 +194,7 @@ td {
   border-bottom: 1px solid var(--border-color);
   font-family: sans-serif;
   color: var(--text-color);
-  width: 100vw;
+  width:100%;
 }
 .forum-seperate-part
 {
@@ -673,4 +673,44 @@ textarea:invalid {
 .forum-dropdown option {
   background: var(--background-color);
   color: var(--text-color);
+}
+
+@media (max-width: 768px) {
+  .forum-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .forum-seperate-part {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .mobile-menu-toggle {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+
+  .mobile-menu {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    background-color: var(--background-color);
+    padding: 1rem;
+  }
+
+  .mobile-menu.open {
+    display: flex;
+  }
+
+  .forum-user {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+  }
 }
