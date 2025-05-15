@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const PostComments = ({ postId, comments: initialComments = [], user }) => {
-  const [comments, setComments] = useState(initialComments);
+  const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -14,7 +14,9 @@ const PostComments = ({ postId, comments: initialComments = [], user }) => {
         const res = await axios.get(
           `http://localhost:3000/api/comments/post/${postId}`
         );
-        setComments(res.data);
+        // Sort comments from newest to oldest
+        const sortedComments = res.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        setComments(sortedComments);
       } catch (err) {
         setComments([]);
       }
@@ -33,13 +35,12 @@ const PostComments = ({ postId, comments: initialComments = [], user }) => {
         { postId, content: commentText },
         { withCredentials: true }
       );
-      // Fetch user info for the new comment if not present
       const newComment = res.data;
       if (!newComment.user || typeof newComment.user === 'string') {
-        // Try to get user from context or fallback
         newComment.user = user ? { username: user.username } : { username: 'You' };
       }
-      setComments((prev) => [...prev, newComment]);
+      // Prepend the new comment to the list
+      setComments((prev) => [newComment, ...prev]);
       setCommentText('');
     } catch (err) {
       setError('Failed to add comment.');
