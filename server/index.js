@@ -7,7 +7,7 @@ import dotenv from 'dotenv';
 
 import userRoutes from './routes/users.js';
 import postRoutes from './routes/posts.js';
-//import commentRoutes from './routes/comments.js';
+import commentRoutes from './routes/comments.js';
 import authRoutes from './routes/auth.js';
 
 import ip from 'ip'; // Importing the ip module to get the local IP address
@@ -46,6 +46,7 @@ app.use(express.json());
 app.use('/api/users', userRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/comments', commentRoutes);
 
 
 app.get('/', (req, res) => {
