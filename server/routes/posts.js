@@ -87,20 +87,73 @@ router.post('/', requireAuth, upload.single('coverImage'), async (req, res) => {
 });
 
 
-// Gets paginated posts
+// Gets paginated posts, with optional search by title and sorting
 router.get('/', async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;      // default to page 1
     const limit = parseInt(req.query.limit) || 10;   // default to 10 per page
     const skip = (page - 1) * limit;
-
-    const posts = await Post.find()
-      .sort({ createdAt: -1 }) // newest first
-      .skip(skip)
-      .limit(limit)
+    const search = req.query.search;
+    const sort = req.query.sort || 'alltime'; // alltime, monthly, daily
+    const sortBy = req.query.sortBy || 'date'; // 'date' or 'views'
+    let query = {};
+    if (search) {
+      // Case-insensitive partial match for title
+      query.title = { $regex: search, $options: 'i' };
+    }
+    // Date filtering for sort (for date sort only)
+    if (sortBy === 'date') {
+      if (sort === 'monthly') {
+        const now = new Date();
+        const firstOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+        query.createdAt = { $gte: firstOfMonth };
+      } else if (sort === 'daily') {
+        const now = new Date();
+        const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        query.createdAt = { $gte: startOfDay };
+      }
+    }
+    let posts = await Post.find(query)
       .populate('user', 'username')
       .populate('comments');
-
+    // Sort by views (alltime/monthly/daily)
+    if (sortBy === 'views') {
+      const now = new Date();
+      let sortKey = 'views';
+      if (sort === 'daily') {
+        const today = now.toISOString().slice(0, 10);
+        posts = posts.map(p => ({
+          ...p.toObject(),
+          _viewsForSort: (p.viewsByDate?.get ? p.viewsByDate.get(today) : p.viewsByDate?.[today]) || 0
+        }));
+        posts.sort((a, b) => b._viewsForSort - a._viewsForSort);
+      } else if (sort === 'monthly') {
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const prefix = `${year}-${month}-`;
+        posts = posts.map(p => {
+          let sum = 0;
+          if (p.viewsByDate) {
+            const entries = p.viewsByDate instanceof Map ? Array.from(p.viewsByDate.entries()) : Object.entries(p.viewsByDate);
+            for (const [date, count] of entries) {
+              if (date.startsWith(prefix)) sum += count;
+            }
+          }
+          return { ...p.toObject(), _viewsForSort: sum };
+        });
+        posts.sort((a, b) => b._viewsForSort - a._viewsForSort);
+      } else {
+        // alltime
+        posts = posts.map(p => ({ ...p.toObject(), _viewsForSort: p.views || 0 }));
+        posts.sort((a, b) => b._viewsForSort - a._viewsForSort);
+      }
+      // Paginate after sorting
+      posts = posts.slice(skip, skip + limit);
+    } else {
+      // Sort by date (default)
+      posts = posts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      posts = posts.slice(skip, skip + limit);
+    }
     res.status(200).json(posts);
   } catch (error) {
     res.status(500).json({ error: error.message });

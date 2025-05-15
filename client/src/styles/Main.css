@@ -194,6 +194,7 @@ td {
   border-bottom: 1px solid var(--border-color);
   font-family: sans-serif;
   color: var(--text-color);
+  width: 100vw;
 }
 .forum-seperate-part
 {
@@ -650,4 +651,26 @@ textarea:invalid {
   font-size: 0.9rem;
   color: var(--text-muted);
   margin-top: 8px;
+}
+
+/* Styling for dropdowns */
+.forum-dropdown {
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  padding: 6px 10px;
+  font-size: 15px;
+  background: var(--background-color);
+  color: var(--text-color);
+  min-width: 110px;
+  cursor: pointer;
+}
+
+.forum-dropdown:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.forum-dropdown option {
+  background: var(--background-color);
+  color: var(--text-color);
 }

@@ -24,7 +24,8 @@ const postSchema = new mongoose.Schema({
   totalRatings: { type: Number, default: 0 },
   totalComments: { type: Number, default: 0 },
   totalLikes: { type: Number, default: 0 },
-  views: { type: Number, default: 0 }
+  views: { type: Number, default: 0 },
+  viewsByDate: { type: Map, of: Number, default: {} } // Track views per day
 
 },
 
@@ -40,9 +41,16 @@ postSchema.methods.updateAverageRating = function () {
   }
 };
 
-postSchema.methods.incrementViews = function () {
+postSchema.methods.incrementViews = async function () {
   this.views = (this.views || 0) + 1;
-  return this.save();
+  // Track views by date
+  const today = new Date();
+  const yyyyMMdd = today.toISOString().slice(0, 10); // 'YYYY-MM-DD'
+  if (!this.viewsByDate) this.viewsByDate = {};
+  this.viewsByDate.set
+    ? this.viewsByDate.set(yyyyMMdd, (this.viewsByDate.get(yyyyMMdd) || 0) + 1)
+    : (this.viewsByDate[yyyyMMdd] = (this.viewsByDate[yyyyMMdd] || 0) + 1);
+  await this.save();
 };
 
 const Post = mongoose.model('Post', postSchema);

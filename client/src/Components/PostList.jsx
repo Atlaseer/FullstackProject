@@ -3,8 +3,14 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import PostCard from './PostCard';
 import '../styles/Main.css';
 import axios from 'axios';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const LIMIT = 10;
+
+function useQuery() {
+  const { search } = useLocation();
+  return React.useMemo(() => new URLSearchParams(search), [search]);
+}
 
 const PostList = () => {
   const [posts, setPosts] = useState([]);
@@ -12,15 +18,27 @@ const PostList = () => {
   const [totalPosts, setTotalPosts] = useState(0);
   const [error, setError] = useState('');
   const hasFetchedInitial = useRef(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const query = useQuery();
+  const urlSearchTerm = query.get('search') || '';
+  const sort = query.get('sort') || 'alltime';
+  const sortBy = query.get('sortBy') || 'date';
 
-  const fetchData = useCallback(async (pageNum) => {
+  const fetchData = useCallback(async (pageNum, searchValue, sortValue, sortByValue) => {
     try {
-      const res = await axios.get(
-        `http://localhost:3000/api/posts?page=${pageNum}&limit=${LIMIT}`,
-        { withCredentials: true }
-      );
+      let url = `http://localhost:3000/api/posts?page=${pageNum}&limit=${LIMIT}`;
+      if (searchValue) {
+        url += `&search=${encodeURIComponent(searchValue)}`;
+      }
+      if (sortValue && sortValue !== 'alltime') {
+        url += `&sort=${sortValue}`;
+      }
+      if (sortByValue && sortByValue !== 'date') {
+        url += `&sortBy=${sortByValue}`;
+      }
+      const res = await axios.get(url, { withCredentials: true });
       if (res.status === 200) {
-        // If backend returns {posts, total}, use that. Otherwise, fallback to res.data.length
         const data = Array.isArray(res.data) ? res.data : res.data.posts || [];
         setPosts((prev) => pageNum === 1 ? data : [...prev, ...data]);
         if (pageNum === 1) {
@@ -32,18 +50,20 @@ const PostList = () => {
     }
   }, []);
 
+  // Fetch on mount and when sort/search in URL changes (for back/forward nav)
   useEffect(() => {
-    if (!hasFetchedInitial.current) {
-      hasFetchedInitial.current = true;
-      fetchData(1);
-    }
-  }, [fetchData]);
+    setPosts([]);
+    setPage(1);
+    hasFetchedInitial.current = true;
+    fetchData(1, urlSearchTerm, sort, sortBy);
+    // eslint-disable-next-line
+  }, [urlSearchTerm, sort, sortBy, location.key]);
 
   const loadMore = useCallback(() => {
     const nextPage = page + 1;
     setPage(nextPage);
-    fetchData(nextPage);
-  }, [page, fetchData]);
+    fetchData(nextPage, urlSearchTerm, sort, sortBy);
+  }, [page, fetchData, urlSearchTerm, sort, sortBy]);
 
   return (
     <section className="post-list">
