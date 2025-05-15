@@ -45,6 +45,16 @@ const Header = () => {
         setSearchText(searchParam);
     }, [location.search]);
 
+    // Reset searchText when navigating to a new page
+    useEffect(() => {
+        const unlisten = () => setSearchText("");
+        window.addEventListener('popstate', unlisten);
+
+        return () => {
+            window.removeEventListener('popstate', unlisten);
+        };
+    }, []);
+
     const handleSearchKeyDown = (e) => {
         if (e.key === 'Enter') {
             if (searchText.trim()) {
