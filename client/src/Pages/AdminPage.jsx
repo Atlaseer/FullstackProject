@@ -8,15 +8,13 @@ import { useNavigate } from 'react-router-dom';
 const AdminPage = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const [users, setUsers] = useState([]);
-  const [error, setError] = useState('');
-  const [stats, setStats] = useState({ topPost: null, totalUsers: 0, totalPosts: 0, posts: [] });
 
-//   useEffect(() => {
-//     if (user && !user.isAdmin) {
-//       navigate('/');
-//     }
-//   }, [user, navigate]);
+  const [users, setUsers] = useState([]);
+  const [stats, setStats] = useState({ topPost: null, totalUsers: 0, totalPosts: 0, posts: [] });
+  const [newUser, setNewUser] = useState({ username: '', password: '' });
+  const [editPostId, setEditPostId] = useState(null);
+  const [editedTitle, setEditedTitle] = useState('');
+  const [error, setError] = useState('');
 
   const fetchUsers = async () => {
     try {
@@ -72,7 +70,38 @@ const AdminPage = () => {
     }
   };
 
-//   if (!user || !user.isAdmin) return null;
+  const handleCreateUser = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post('http://localhost:3000/api/users', newUser, { withCredentials: true });
+      fetchUsers();
+      setNewUser({ username: '', password: '' });
+    } catch (err) {
+      alert('Failed to create user');
+    }
+  };
+
+  const startEditingPost = (post) => {
+    setEditPostId(post._id);
+    setEditedTitle(post.title);
+  };
+
+  const cancelEdit = () => {
+    setEditPostId(null);
+    setEditedTitle('');
+  };
+
+  const savePostEdit = async (postId) => {
+    try {
+      await axios.put(`http://localhost:3000/api/posts/${postId}`, {
+        title: editedTitle,
+      }, { withCredentials: true });
+      cancelEdit();
+      fetchStats();
+    } catch (err) {
+      alert('Failed to update post');
+    }
+  };
 
   return (
     <div className='homepage-container'>
@@ -80,6 +109,7 @@ const AdminPage = () => {
         <Sidebar />
         <h2>Admin Dashboard</h2>
         {error && <p className='txt-error'>{error}</p>}
+
         <div style={{ marginBottom: 24 }}>
           <h3>Statistics</h3>
           <ul>
@@ -88,11 +118,33 @@ const AdminPage = () => {
             {stats.topPost && (
               <li>
                 <strong>Top Post:</strong> "{stats.topPost.title}" by {stats.topPost.user?.username || 'Unknown'} (Avg. Rating: {stats.topPost.averageRating?.toFixed(2) || 0})
-                <button style={{marginLeft:8}} onClick={() => handleDeletePost(stats.topPost._id)}>Delete</button>
+                <button style={{ marginLeft: 8 }} onClick={() => handleDeletePost(stats.topPost._id)}>Delete</button>
               </li>
             )}
           </ul>
         </div>
+
+        {/* Create New User */}
+        <h3>Create New User</h3>
+        <form onSubmit={handleCreateUser} style={{ marginBottom: '24px' }}>
+          <input
+            type="text"
+            placeholder="Username"
+            value={newUser.username}
+            onChange={(e) => setNewUser({ ...newUser, username: e.target.value })}
+            required
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={newUser.password}
+            onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
+            required
+          />
+          <button type="submit">Create User</button>
+        </form>
+
+        {/* All Posts */}
         <h3>All Posts</h3>
         <table>
           <thead>
@@ -107,15 +159,41 @@ const AdminPage = () => {
           <tbody>
             {stats.posts.map((p) => (
               <tr key={p._id}>
-                <td>{p.title}</td>
+                <td>
+                  {editPostId === p._id ? (
+                    <input
+                      type="text"
+                      value={editedTitle}
+                      onChange={(e) => setEditedTitle(e.target.value)}
+                    />
+                  ) : (
+                    p.title
+                  )}
+                </td>
                 <td>{p.user?.username || 'Unknown'}</td>
                 <td>{p.averageRating?.toFixed(2) || 0}</td>
                 <td>{p.views || 0}</td>
-                <td><button onClick={() => handleDeletePost(p._id)}>Delete</button></td>
+                <td>
+                  <button onClick={() => handleDeletePost(p._id)}>Delete</button>
+                  {user?.isAdmin && (
+                    <>
+                      {editPostId === p._id ? (
+                        <>
+                          <button onClick={() => savePostEdit(p._id)}>Save</button>
+                          <button onClick={cancelEdit}>Cancel</button>
+                        </>
+                      ) : (
+                        <button onClick={() => startEditingPost(p)}>Edit</button>
+                      )}
+                    </>
+                  )}
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
+
+        {/* All Users */}
         <h3>All Users</h3>
         <table>
           <thead>
@@ -131,7 +209,7 @@ const AdminPage = () => {
             {users.map((u) => (
               <tr key={u._id}>
                 <td>{u.username}</td>
-                <td>{u.email}</td>
+                <td>{u.email || '-'}</td>
                 <td>{u.isAdmin ? '✅' : '❌'}</td>
                 <td>{u.isActive ? '✅' : '❌'}</td>
                 <td><button onClick={() => handleDeleteUser(u._id)}>Delete</button></td>

@@ -192,42 +192,50 @@ router.get('/:id', async (req, res) => {
 })
 
 //Updates post by ID
+// Updates post by ID (only admin or post owner)
 router.put('/:id', requireAuth, upload.single('coverImage'), async (req, res) => {
   try {
+    const { id: userId, isAdmin } = req.user;
     const { title, content, tags, categories } = req.body;
 
-    // Prepare to update data
+    const post = await Post.findById(req.params.id);
+    if (!post) return res.status(404).json({ message: 'Post not found' });
+
+    // 🔐 Check if user is allowed to edit
+    if (!isAdmin && post.user.toString() !== userId) {
+      return res.status(403).json({ error: 'Not authorized to edit this post' });
+    }
+
+    // Prepare fields to update
     const updateData = {
-      title,
-      content,
-      tags: tags
-        ? (typeof tags === 'string'
+      ...(title && { title }),
+      ...(content && { content }),
+      ...(tags && {
+        tags: typeof tags === 'string'
           ? tags.split(',').map(tag => tag.trim()).filter(Boolean)
-          : tags)
-        : undefined,
-      categories: categories
-        ? (typeof categories === 'string'
+          : tags
+      }),
+      ...(categories && {
+        categories: typeof categories === 'string'
           ? categories.split(',').map(cat => cat.trim()).filter(Boolean)
-          : categories)
-        : undefined
+          : categories
+      })
     };
-    // Adds new image path if uploaded
+
     if (req.file) {
       updateData.coverImage = `/uploads/${req.file.filename}`;
     }
 
-    const updatedPost = await Post.findByIdAndUpdate(
-      req.params.id,
-      updateData,
-      { new: true } // Returns updated document
-    );
-    if (!updatedPost) return res.status(404).json({ message: 'Post not found' });
-    res.status(200).json(updatedPost);
+    const updatedPost = await Post.findByIdAndUpdate(req.params.id, updateData, {
+      new: true
+    });
 
+    res.status(200).json(updatedPost);
   } catch (error) {
-    res.status(500).json({ error: error.message })
+    res.status(500).json({ error: error.message });
   }
-})
+});
+
 
 //Delete a post by ID
 //Requires authentication
