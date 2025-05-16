@@ -203,7 +203,9 @@ td {
   gap:20px;
 }
 
-.forum-logo {
+.forum-logo>.logo-link {
+  display: flex;
+  flex-direction: row;
   font-size: 24px;
   font-weight: bold;
   color: var(--button-bg);
@@ -713,4 +715,13 @@ textarea:invalid {
     justify-content: flex-end;
     margin-top: 1rem;
   }
+}
+
+.post-view-cover-image
+{
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border-radius: 6px;
 }
