@@ -20,8 +20,7 @@ const requireAuth = (req, res, next) => {
   }
 };
 
-// Lets authenticated users to post
-// POST /api/posts/:id/rate
+//Makes sure only authenticated users can post
 router.post('/:id/rate', requireAuth, async (req, res) => {
   const { rating } = req.body;
   const userId = req.user.id;
@@ -34,11 +33,11 @@ router.post('/:id/rate', requireAuth, async (req, res) => {
     const post = await Post.findById(req.params.id);
     if (!post) return res.status(404).json({ message: 'Post not found' });
 
-    // Check if user has already rated
+    //Check if user has already rated
     const existing = post.ratings.find((r) => r.user.toString() === userId);
 
     if (existing) {
-      existing.rating = rating; // update
+      existing.rating = rating;
     } else {
       post.ratings.push({ user: userId, rating });
       post.totalRatings = post.ratings.length;
@@ -61,10 +60,10 @@ router.post('/:id/rate', requireAuth, async (req, res) => {
 //Creates new post with cover image upload
 router.post('/', requireAuth, upload.single('coverImage'), async (req, res) => {
   try {
-    // Get the user ID from the token
+    //Gets the user ID from the token
     const userId = req.user.id;
     const { title, content, tags, categories } = req.body;
-    // Preparing post data
+    //Preparing post data
     const postData = {
       user: userId,
       title,
@@ -74,7 +73,7 @@ router.post('/', requireAuth, upload.single('coverImage'), async (req, res) => {
       categories: categories ? (typeof categories === 'string' ?
         categories.split(',').map(cat => cat.trim()).filter(Boolean) : categories) : []
     };
-    // If you uploaded a cover image, add the image path
+    //If you uploaded a cover image, add the image path
     if (req.file) {
       postData.coverImage = `/uploads/${req.file.filename}`;
     }
@@ -90,18 +89,18 @@ router.post('/', requireAuth, upload.single('coverImage'), async (req, res) => {
 // Gets paginated posts, with optional search by title and sorting
 router.get('/', async (req, res) => {
   try {
-    const page = parseInt(req.query.page) || 1;      // default to page 1
-    const limit = parseInt(req.query.limit) || 10;   // default to 10 per page
+    const page = parseInt(req.query.page) || 1; //default to page 1, up to 10 per page
+    const limit = parseInt(req.query.limit) || 10;
     const skip = (page - 1) * limit;
     const search = req.query.search;
-    const sort = req.query.sort || 'alltime'; // alltime, monthly, daily
-    const sortBy = req.query.sortBy || 'date'; // 'date' or 'views'
+    const sort = req.query.sort || 'alltime'; //Sort by alltime, monthly, daily or views
+    const sortBy = req.query.sortBy || 'date';
     let query = {};
     if (search) {
-      // Case-insensitive partial match for title
+      //Case-insensitive partial match for title
       query.title = { $regex: search, $options: 'i' };
     }
-    // Date filtering for sort (for date sort only)
+    //Date filtering for sort (for date sort only)
     if (sortBy === 'date') {
       if (sort === 'monthly') {
         const now = new Date();
@@ -111,12 +110,12 @@ router.get('/', async (req, res) => {
         const now = new Date();
         const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
         query.createdAt = { $gte: startOfDay };
-      }
-    }
+      }}
     let posts = await Post.find(query)
       .populate('user', 'username')
       .populate('comments');
-    // Sort by views (alltime/monthly/daily)
+
+    //Sort by views (alltime/monthly/daily)
     if (sortBy === 'views') {
       const now = new Date();
       let sortKey = 'views';
@@ -143,7 +142,7 @@ router.get('/', async (req, res) => {
         });
         posts.sort((a, b) => b._viewsForSort - a._viewsForSort);
       } else {
-        // alltime
+        //Alltime
         posts = posts.map(p => ({ ...p.toObject(), _viewsForSort: p.views || 0 }));
         posts.sort((a, b) => b._viewsForSort - a._viewsForSort);
       }
@@ -174,7 +173,6 @@ router.get('/user/:userId', async (req, res) => {
 });
 
 //Gets post by ID
-//Increments view count
 router.get('/:id', async (req, res) => {
   try {
     const post = await Post.findById(req.params.id)
@@ -191,17 +189,15 @@ router.get('/:id', async (req, res) => {
   }
 })
 
-//Updates post by ID
-// Updates post by ID (only admin or post owner)
+//Updates post by ID (only admin or post owner)
 router.put('/:id', requireAuth, upload.single('coverImage'), async (req, res) => {
   try {
     const { id: userId, isAdmin } = req.user;
     const { title, content, tags, categories } = req.body;
-
     const post = await Post.findById(req.params.id);
     if (!post) return res.status(404).json({ message: 'Post not found' });
 
-    // 🔐 Check if user is allowed to edit
+    //Check if user is allowed to edit
     if (!isAdmin && post.user.toString() !== userId) {
       return res.status(403).json({ error: 'Not authorized to edit this post' });
     }
@@ -221,11 +217,9 @@ router.put('/:id', requireAuth, upload.single('coverImage'), async (req, res) =>
           : categories
       })
     };
-
     if (req.file) {
       updateData.coverImage = `/uploads/${req.file.filename}`;
     }
-
     const updatedPost = await Post.findByIdAndUpdate(req.params.id, updateData, {
       new: true
     });
@@ -235,7 +229,6 @@ router.put('/:id', requireAuth, upload.single('coverImage'), async (req, res) =>
     res.status(500).json({ error: error.message });
   }
 });
-
 
 //Delete a post by ID
 //Requires authentication

@@ -3,7 +3,7 @@ import User from '../models/User.js';
 
 const router = express.Router();
 
-// Create new user
+//Creates new user
 router.post('/', async (req, res) => {
     try {
         const username = req.body.username?.trim();
@@ -50,7 +50,7 @@ router.post('/', async (req, res) => {
     }
 });
 
-// Get all users (no passwords)
+//Get all users
 router.get('/', async (req, res) => {
     try {
         const users = await User.find().select('-password');
@@ -60,7 +60,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Get a user by ID (no password)
+//Get a user by ID - password
 router.get('/id/:id', async (req, res) => {
     try {
         const user = await User.findById(req.params.id).select('-password');
@@ -71,7 +71,7 @@ router.get('/id/:id', async (req, res) => {
     }
 });
 
-// Get a user by username (no password)
+//Get a user by username
 router.get('/username/:username', async (req, res) => {
     try {
         const user = await User.findOne({ username: req.params.username }).select('-password');
@@ -82,7 +82,7 @@ router.get('/username/:username', async (req, res) => {
     }
 });
 
-// ✅ Update user by ID (username, isAdmin, isActive)
+//Update user by ID (username, isAdmin, isActive)
 router.put('/:id', async (req, res) => {
     try {
         const { username, isAdmin, isActive } = req.body;
