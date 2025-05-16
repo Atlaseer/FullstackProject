@@ -254,8 +254,7 @@
     z-index: 100;
 }
 
-.user-dropdown-menu a,
-.user-dropdown-menu button {
+.user-dropdown-menu a,.user-dropdown-menu button {
     display: block;
     width: 100%;
     text-align: left;
@@ -268,12 +267,10 @@
     cursor: pointer;
 }
 
-.user-dropdown-menu a:hover,
-.user-dropdown-menu button:hover {
+.user-dropdown-menu a:hover,.user-dropdown-menu button:hover {
     background-color: var(--bg-main);
 }
 
-/* Styling for dropdowns */
 .forum-dropdown {
     border-radius: 6px;
     border: 1px solid var(--border-color);
@@ -284,14 +281,19 @@
     min-width: 110px;
     cursor: pointer;
 }
-
-
 .forum-dropdown:focus {
     outline: none;
     border-color: var(--primary-color);
 }
-
 .forum-dropdown option {
     background: var(--background-color);
     color: var(--text-color);
+}
+
+.post-view-cover-image {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border-radius: 6px;
 }
