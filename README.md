@@ -51,8 +51,12 @@ FullstackProject/
 │	│ 	├── routes/ # Routing configuration
 │	│ 	│ 	└── PrivateRoute.jsx
 │	│ 	├── styles/ # CSS styles
-│	│ 	│ 	├── Header.css
+│	│ 	│ 	├── Forms.css
 │	│ 	│ 	├── Loading.css
+│	│ 	│ 	├── Base.css
+│	│ 	│ 	├── Components.css
+│	│ 	│ 	├── Layout.css
+│	│ 	│ 	├── Pages.css
 │	│ 	│ 	├── Main.css
 │	│ 	│ 	└── Profile.css
 │	│ 	├── utils/ # Utility functions
