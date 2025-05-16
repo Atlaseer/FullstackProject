@@ -12,7 +12,6 @@ import ViewPostPage from './Pages/ViewPostPage'
 import LoadingPage from './Pages/LoadingPage'
 import { useAuth } from './contexts/AuthContext'
 
-
 import LoginPage from './Pages/LoginPage'
 import AdminPage from './Pages/AdminPage'
 import Profile from './Pages/Profile'

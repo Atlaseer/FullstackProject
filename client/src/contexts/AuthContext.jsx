@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
       { username, password },
       { withCredentials: true }
     );
-    setUser(res.data); // ← This must trigger re-render
+    setUser(res.data.user); // ← This must trigger re-render
   };
 
   const logout = async () => {
