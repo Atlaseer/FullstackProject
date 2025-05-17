@@ -37,16 +37,6 @@ userSchema.methods.comparePassword = async function (password) {
   }
 };
 
-//Find user by ID
-userSchema.statics.findById = async function (id) {
-    try {
-        return await this.findById(id);
-    }
-    catch (error) {
-        throw new Error(error);
-    }
-    }
-
 //Find user by username
 userSchema.statics.findByUsername = async function (username) {
     try {
