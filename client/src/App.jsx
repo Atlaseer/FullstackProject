@@ -11,6 +11,7 @@ import CreatePostPage from './Pages/CreatePagePost'
 import ViewPostPage from './Pages/ViewPostPage'
 import LoadingPage from './Pages/LoadingPage'
 import { useAuth } from './contexts/AuthContext'
+import BannedPage from './Pages/BannedPage'
 
 import LoginPage from './Pages/LoginPage'
 import AdminPage from './Pages/AdminPage'
@@ -24,30 +25,35 @@ import AboutPage from './Pages/AboutPage'
 
 function App() {
 
-  const {loading} = useAuth()
+  const { loading, isActive } = useAuth()
 
-  if(loading)
-    return <LoadingPage/>
+  if (loading) {
+    return <LoadingPage />
+  }
+
+  if (!isActive) {
+    return <BannedPage />
+  }
 
   return (
     <BrowserRouter>
-      <Header/>
+      <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/profile/:username" element={<Profile/>} />
-        <Route path="/newpost" element={<CreatePostPage/>} />
-        <Route path="/post/:id" element={<ViewPostPage/>} />
-        <Route path="/admin" element={<AdminPage/>} />
+        <Route path="/profile/:username" element={<Profile />} />
+        <Route path="/newpost" element={<CreatePostPage />} />
+        <Route path="/post/:id" element={<ViewPostPage />} />
+        <Route path="/admin" element={<AdminPage />} />
         <Route path="*" element={<FourOFourPage />} />
         <Route path="/general" element={<GeneralPage />} />
         <Route path="/announcements" element={<AnnouncementsPage />} />
         <Route path="/support" element={<SupportPage />} />
         <Route path="/off-topic" element={<OffTopicPage />} />
-        <Route path='/signup' element={<RegisterPage/>} />
+        <Route path='/signup' element={<RegisterPage />} />
         <Route path="/about" element={<AboutPage />} />
       </Routes>
-      <Footer/>
+      <Footer />
     </BrowserRouter>
   )
 }

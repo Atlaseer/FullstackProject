@@ -30,7 +30,9 @@ router.post('/login', async (req, res) => {
 
     const token = jwt.sign({
             id: user._id,
-            username: user.username
+            username: user.username,
+            admin: user.isAdmin,
+            active: user.isActive,
         },
         process.env.JWT_SECRET,
         { expiresIn: '1h' }
@@ -43,27 +45,44 @@ router.post('/login', async (req, res) => {
         maxAge: 1000 * 60 * 60, // 1 hour
     })
 
-    res.json({message: 'Login successful', token, user: {username: user.username, id: user._id}})
+    res.json({message: 'Login successful', token, user: {username: user.username, id: user._id, admin: user.isAdmin, active: user.isActive}});
 })
 
 //Get user info from token
 router.get('/me', (req, res) => {
-    console.log('Request received at /api/auth/me endpoint')
+    console.log('Request received at /api/auth/me endpoint');
     const token = req.cookies.token;
 
-    if(!token) {
+    if (!token) {
         console.log('No token found');
-        return res.status(401).json({error: 'Not logged in'});
+        return res.status(401).json({ error: 'Not logged in' });
     }
 
     try {
         const user = jwt.verify(token, process.env.JWT_SECRET);
         console.log('Token verified successfully', user);
-        res.json(user);
-    }
-    catch(error) {
+
+        // Ensure admin and active properties are included in the response
+        const { id, username, admin, active } = user;
+
+        if (admin === undefined || active === undefined) {
+            return res.status(500).json({ error: 'Token payload is missing required properties' });
+        }
+
+        // Check if the user is active
+        if (!active) {
+            return res.status(403).json({ error: 'User is inactive' });
+        }
+
+        // Check if the user is an admin
+        if (!admin) {
+            return res.status(403).json({ error: 'User is not an admin' });
+        }
+
+        res.json({ id, username, admin, active });
+    } catch (error) {
         console.error('Token verification failed', error);
-        res.status(403).json({error: 'Invalid or expired token'});
+        res.status(403).json({ error: 'Invalid or expired token' });
     }
 })
 

@@ -38,8 +38,11 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
+  const isAdmin = user?.admin || false;
+  const isActive = user?.active || false;
+
   return (
-    <AuthContext.Provider value={{ user, login, logout, loading }}>
+    <AuthContext.Provider value={{ user, login, logout, loading, isAdmin, isActive }}>
       {children}
     </AuthContext.Provider>
   );

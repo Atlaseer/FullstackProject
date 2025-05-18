@@ -4,7 +4,7 @@ import '../styles/Main.css';
 import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
-const VITE_SERVER_URL = import.meta.env.VITE_SERVER_URL;
+const VITE_SERVER_URL = "http://localhost:3000"; 
 
 
 const AdminPage = () => {
@@ -50,6 +50,12 @@ const AdminPage = () => {
     fetchUsers();
     fetchStats();
   }, []);
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/'); // Redirect to home if not logged in or not an admin
+    }
+  }, [user, navigate]);
 
   const handleDeleteUser = async (userId) => {
     if (!window.confirm('Are you sure you want to delete this user?')) return;
