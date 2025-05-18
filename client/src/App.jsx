@@ -31,8 +31,14 @@ function App() {
     return <LoadingPage />
   }
 
-  if (!isActive && user) {
-    return <BannedPage />
+  if (!isActive && user) 
+  {
+    return (
+      <>
+        <BannedPage />
+      </>
+    
+    )
   }
 
   return (
