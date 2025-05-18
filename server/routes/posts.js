@@ -14,6 +14,8 @@ const requireAuth = (req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
+    console.log('Token:', req.cookies.token);
+    console.log('Decoded user:', req.user);
     next();
   } catch (err) {
     return res.status(403).json({ error: 'Invalid token' });
@@ -201,6 +203,9 @@ router.put('/:id', requireAuth, upload.single('coverImage'), async (req, res) =>
     if (!isAdmin && post.user.toString() !== userId) {
       return res.status(403).json({ error: 'Not authorized to edit this post' });
     }
+
+    console.log('User ID from token:', userId);
+    console.log('Post owner ID:', post.user.toString());
 
     // Prepare fields to update
     const updateData = {

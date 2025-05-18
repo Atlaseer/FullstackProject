@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import MenuBar from './MenuBar';
-import '../styles/EditPostForm.css';
+
 
 const EditPostForm = ({ post, onSave, onCancel }) => {
   const [title, setTitle] = useState(post.title);

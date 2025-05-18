@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 const navLinks = [
   { to: "/", label: "Home", exact: true },
@@ -6,6 +7,8 @@ const navLinks = [
 ];
 
 const Navbar = ({ currentPath }) => {
+  const { isAdmin } = useAuth();
+
   return (
     <nav className="navbar">
       <ul className="navbar_links">
@@ -24,6 +27,16 @@ const Navbar = ({ currentPath }) => {
             </NavLink>
           </li>
         ))}
+        {isAdmin && (
+          <li>
+            <NavLink
+              to="/admin"
+              className={({ isActive }) => (isActive ? "active-navbar-link" : undefined)}
+            >
+              Admin
+            </NavLink>
+          </li>
+        )}
       </ul>
     </nav>
   );

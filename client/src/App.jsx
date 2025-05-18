@@ -25,13 +25,13 @@ import AboutPage from './Pages/AboutPage'
 
 function App() {
 
-  const { loading, isActive } = useAuth()
+  const { loading, isActive, user } = useAuth()
 
   if (loading) {
     return <LoadingPage />
   }
 
-  if (!isActive) {
+  if (!isActive && user) {
     return <BannedPage />
   }
 

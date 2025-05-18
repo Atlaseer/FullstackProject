@@ -11,7 +11,7 @@ import logo from '../assets/foodlover.svg';
 import { getStoredTheme, setStoredTheme } from '../utils/theme';
 
 const Header = () => {
-    const { user } = useAuth();
+    const { user, isAdmin } = useAuth();
     const location = useLocation();
     const navigate = useNavigate ? useNavigate() : null;
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

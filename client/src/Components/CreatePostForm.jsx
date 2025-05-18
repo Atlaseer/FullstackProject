@@ -5,19 +5,18 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import '../styles/Main.css';
 import '../styles/TiptapEditor.css';
 import MenuBar from './MenuBar';
 
 const CreatePostForm = () => {
-  const [title, setTitle]                     = useState('');
-  const [tags, setTags]                       = useState('');
-  const [categories, setCategories]           = useState('');
-  const [coverImage, setCoverImage]           = useState(null);
+  const [title, setTitle] = useState('');
+  const [tags, setTags] = useState('');
+  const [categories, setCategories] = useState('');
+  const [coverImage, setCoverImage] = useState(null);
   const [coverImagePreview, setCoverImagePreview] = useState(null);
-  const [error, setError]                     = useState('');
-  const { user }                              = useAuth();
-  const navigate                              = useNavigate();
+  const [error, setError] = useState('');
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
   const [htmlContent, setHtmlContent] = useState('');
   const editor = useEditor({

@@ -21,19 +21,43 @@ const MenuBar = ({ editor }) => {
       </button>
       <button
         type="button"
-        onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-        className={editor.isActive('heading', { level: 1 }) ? 'active' : ''}
+        onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+        className={editor.isActive('heading', { level: 2 }) ? 'active' : ''}
         aria-label="Heading 1"
       >
-        H1
+        H2
       </button>
       <button
         type="button"
-        onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-        className={editor.isActive('heading', { level: 2 }) ? 'active' : ''}
+        onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
+        className={editor.isActive('heading', { level: 3 }) ? 'active' : ''}
         aria-label="Heading 2"
       >
-        H2
+        H3
+      </button>
+      <button
+        type="button"
+        onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
+        className={editor.isActive('heading', { level: 4 }) ? 'active' : ''}
+        aria-label="Heading 2"
+      >
+        H4
+      </button>
+      <button
+        type="button"
+        onClick={() => editor.chain().focus().toggleHeading({ level: 5 }).run()}
+        className={editor.isActive('heading', { level: 5 }) ? 'active' : ''}
+        aria-label="Heading 2"
+      >
+        H5
+      </button>
+      <button
+        type="button"
+        onClick={() => editor.chain().focus().toggleHeading({ level: 6 }).run()}
+        className={editor.isActive('heading', { level: 6 }) ? 'active' : ''}
+        aria-label="Heading 2"
+      >
+        H6
       </button>
       <button
         type="button"
