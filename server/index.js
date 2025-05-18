@@ -26,7 +26,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 const PORT = process.env.PORT || 3000;
 
-const allowedOrigins = ['http://localhost:5173', 'http://localhost']
+const allowedOrigins = ['http://localhost:5173', 'http://localhost', 'http://localhost:3000']
 
 //Middleware
 app.use(cors({
@@ -40,6 +40,13 @@ app.use(cors({
       }
     },
     credentials: true
+  }));
+
+  app.use(cors({
+    origin: allowedOrigins, // Allow requests from these origins
+    credentials: true, // Allow cookies to be sent with requests
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allow these HTTP methods
+    allowedHeaders: ['Content-Type', 'Authorization'], // Allow these headers
   }));
 
 app.use(cookieParser());
