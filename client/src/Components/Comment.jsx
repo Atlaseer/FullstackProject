@@ -6,8 +6,8 @@ import { FaReply, FaThumbsUp, FaThumbsDown } from 'react-icons/fa';
 const Comment = ({ comment, onReply, user }) => {
   const [showReplyInput, setShowReplyInput] = useState(false);
   const [replyText, setReplyText] = useState('');
-  const [likes, setLikes] = useState(comment.likes || 0);
-  const [dislikes, setDislikes] = useState(comment.dislikes || 0);
+  const [likes, setLikes] = useState(comment.likes ?? 0);
+  const [dislikes, setDislikes] = useState(comment.dislikes ?? 0);
 
   const totalVotes = likes + dislikes;
   const likeRatio = totalVotes ? (likes / totalVotes) * 100 : 50;
@@ -53,10 +53,10 @@ const Comment = ({ comment, onReply, user }) => {
         </div>
         <div className="vote-buttons">
           <button onClick={() => handleVote('like')} className="vote-button">
-            <FaThumbsUp /> {formatCount(likes)}
+            <FaThumbsUp /> {formatCount(likes ?? 0)}
           </button>
           <button onClick={() => handleVote('dislike')} className="vote-button">
-            <FaThumbsDown /> {formatCount(dislikes)}
+            <FaThumbsDown /> {formatCount(dislikes ?? 0)}
           </button>
         </div>
       </div>
