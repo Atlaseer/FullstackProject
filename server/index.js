@@ -26,15 +26,16 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 const PORT = process.env.PORT || 3000;
 
-//const allowedOrigins = ['http://localhost:5173', 'http://localhost']
+const allowedOrigins = ['http://localhost:5173', 'http://localhost']
 
 //Middleware
 app.use(cors({
     origin: function (origin, callback) {
-      const allowedOrigins = ['http://localhost:5173'];
+      //const allowedOrigins = ['http://localhost:5173'];
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
+        console.error(`Blocked by CORS: ${origin}`);
         callback(new Error('Not allowed by CORS'));
       }
     },
