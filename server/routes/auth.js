@@ -48,17 +48,21 @@ router.post('/login', async (req, res) => {
 
 //Get user info from token
 router.get('/me', (req, res) => {
+    console.log('Request received at /api/auth/me endpoint')
     const token = req.cookies.token;
 
     if(!token) {
+        console.log('No token found');
         return res.status(401).json({error: 'Not logged in'});
     }
 
     try {
         const user = jwt.verify(token, process.env.JWT_SECRET);
+        console.log('Token verified successfully', user);
         res.json(user);
     }
     catch(error) {
+        console.error('Token verification failed', error);
         res.status(403).json({error: 'Invalid or expired token'});
     }
 })
