@@ -6,6 +6,7 @@ import { useAuth } from '../contexts/AuthContext';
 import '../styles/Main.css';
 import PostComments from '../Components/PostComments';
 import PostDetails from '../Components/PostDetails';
+const VITE_SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 const ViewPostPage = () => {
   const { id } = useParams();
@@ -18,7 +19,7 @@ const ViewPostPage = () => {
   useEffect(() => {
     let isMounted = true;
     axios
-      .get(`http://localhost:3000/api/posts/${id}`, { withCredentials: true })
+      .get(`${VITE_SERVER_URL}/api/posts/${id}`, { withCredentials: true })
       .then((res) => {
         if (!isMounted) return;
         setPost(res.data);
@@ -37,7 +38,7 @@ const ViewPostPage = () => {
     setRating(newRating);
     try {
       const res = await axios.post(
-        `http://localhost:3000/api/posts/${id}/rate`,
+        `${VITE_SERVER_URL}/api/posts/${id}/rate`,
         { rating: newRating },
         { withCredentials: true }
       );
@@ -67,7 +68,7 @@ const ViewPostPage = () => {
               {post.coverImage && (
                 <div className="post-view-cover">
                   <img
-                    src={`http://localhost:3000${post.coverImage}`}
+                    src={`${VITE_SERVER_URL}${post.coverImage}`}
                     alt={`${post.title} Cover image of`}
                     className="post-view-cover-image"
                   />

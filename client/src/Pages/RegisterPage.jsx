@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import axios from 'axios';
+const VITE_SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 const RegisterPage = () => {
   const { user, login } = useAuth();
@@ -33,7 +34,7 @@ const RegisterPage = () => {
     setError('');
 
     try {
-      await axios.post('http://localhost:3000/api/users', form, {
+      await axios.post(`${VITE_SERVER_URL}/api/users`, form, {
         withCredentials: true
       });
 

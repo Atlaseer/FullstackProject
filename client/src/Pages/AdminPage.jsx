@@ -4,6 +4,8 @@ import '../styles/Main.css';
 import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
+const VITE_SERVER_URL = import.meta.env.VITE_SERVER_URL;
+
 
 const AdminPage = () => {
   const { user } = useAuth();
@@ -18,7 +20,7 @@ const AdminPage = () => {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get('http://localhost:3000/api/users', { withCredentials: true });
+      const res = await axios.get(`${VITE_SERVER_URL}/api/users`, { withCredentials: true });
       setUsers(res.data);
     } catch (err) {
       setError('Failed to load users');
@@ -28,8 +30,8 @@ const AdminPage = () => {
   const fetchStats = async () => {
     try {
       const [postsRes, usersRes] = await Promise.all([
-        axios.get('http://localhost:3000/api/posts?limit=1000', { withCredentials: true }),
-        axios.get('http://localhost:3000/api/users', { withCredentials: true })
+        axios.get(`${VITE_SERVER_URL}/api/posts?limit=1000`, { withCredentials: true }),
+        axios.get(`${VITE_SERVER_URL}/api/users`, { withCredentials: true })
       ]);
       const posts = Array.isArray(postsRes.data) ? postsRes.data : postsRes.data.posts || [];
       const topPost = posts.reduce((max, p) => (p.averageRating > (max?.averageRating || 0) ? p : max), null);
@@ -52,7 +54,7 @@ const AdminPage = () => {
   const handleDeleteUser = async (userId) => {
     if (!window.confirm('Are you sure you want to delete this user?')) return;
     try {
-      await axios.delete(`http://localhost:3000/api/users/${userId}`, { withCredentials: true });
+      await axios.delete(`${VITE_SERVER_URL}/api/users/${userId}`, { withCredentials: true });
       fetchUsers();
       fetchStats();
     } catch (err) {
@@ -63,7 +65,7 @@ const AdminPage = () => {
   const handleDeletePost = async (postId) => {
     if (!window.confirm('Are you sure you want to delete this post?')) return;
     try {
-      await axios.delete(`http://localhost:3000/api/posts/${postId}`, { withCredentials: true });
+      await axios.delete(`${VITE_SERVER_URL}/api/posts/${postId}`, { withCredentials: true });
       fetchStats();
     } catch (err) {
       alert('Failed to delete post');
@@ -73,7 +75,7 @@ const AdminPage = () => {
   const handleCreateUser = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:3000/api/users', newUser, { withCredentials: true });
+      await axios.post(`${VITE_SERVER_URL}/api/users`, newUser, { withCredentials: true });
       fetchUsers();
       setNewUser({ username: '', password: '' });
     } catch (err) {
@@ -93,7 +95,7 @@ const AdminPage = () => {
 
   const savePostEdit = async (postId) => {
     try {
-      await axios.put(`http://localhost:3000/api/posts/${postId}`, {
+      await axios.put(`${VITE_SERVER_URL}/api/posts/${postId}`, {
         title: editedTitle,
       }, { withCredentials: true });
       cancelEdit();

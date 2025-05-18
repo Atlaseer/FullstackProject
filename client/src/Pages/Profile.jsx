@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import '../styles/Profile.css';
+const VITE_SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 const Profile = () => {
     const { username } = useParams();
@@ -9,7 +10,8 @@ const Profile = () => {
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
-        fetch(`http://localhost:3000/api/users/username/${username}`, { credentials: 'include' })
+        
+        fetch(`${VITE_SERVER_URL}/api/users/username/${username}`, { credentials: 'include' })
             .then(res => {
                 if (!res.ok) throw new Error(res.statusText || 'Failed to load');
                 return res.json();
@@ -20,7 +22,7 @@ const Profile = () => {
 
     useEffect(() => {
         if (!user) return;
-        fetch(`http://localhost:3000/api/posts/user/${user._id}`, { credentials: 'include' })
+        fetch(`${VITE_SERVER_URL}/api/posts/user/${user._id}`, { credentials: 'include' })
             .then(res => {
                 if (!res.ok) throw new Error(res.statusText || 'Failed to load posts');
                 return res.json();
