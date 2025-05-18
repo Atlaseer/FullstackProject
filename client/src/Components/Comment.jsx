@@ -48,7 +48,7 @@ const Comment = ({ comment, onReply, user }) => {
       <div className="comment-meta">{new Date(comment.createdAt).toLocaleString()}</div>
 
       <div className="comment-controls">
-        {/* <div className="vote-bar">
+        <div className="vote-bar">
           <div className="vote-ratio" style={{ width: `${likeRatio}%` }}></div>
         </div>
         <div className="vote-buttons">
@@ -58,7 +58,7 @@ const Comment = ({ comment, onReply, user }) => {
           <button onClick={() => handleVote('dislike')} className="vote-button">
             <FaThumbsDown /> {formatCount(dislikes)}
           </button>
-        </div> */}
+        </div>
       </div>
 
       {user && (

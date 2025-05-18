@@ -134,11 +134,12 @@ router.delete('/:id', requireAuth, async (req, res) => {
   }
 });
 
-// Vote on a comment (like or dislike)
+// POST /api/comments/:id/vote (dislikes/likes)
 router.post('/:id/vote', requireAuth, async (req, res) => {
   try {
     const { id } = req.params;
     const { type } = req.body;
+    const userId = req.user.id;
 
     if (!['like', 'dislike'].includes(type)) {
       return res.status(400).json({ error: 'Invalid vote type' });
@@ -149,23 +150,28 @@ router.post('/:id/vote', requireAuth, async (req, res) => {
       return res.status(404).json({ error: 'Comment not found' });
     }
 
-    // Initialize if missing
-    comment.likes = comment.likes || 0;
-    comment.dislikes = comment.dislikes || 0;
+    // Remove existing vote if exists
+    comment.likes = comment.likes.filter(uid => uid.toString() !== userId);
+    comment.dislikes = comment.dislikes.filter(uid => uid.toString() !== userId);
 
-    // Update vote count
+    // Add new vote
     if (type === 'like') {
-      comment.likes += 1;
+      comment.likes.push(userId);
     } else if (type === 'dislike') {
-      comment.dislikes += 1;
+      comment.dislikes.push(userId);
     }
 
     await comment.save();
-    res.json({ likes: comment.likes, dislikes: comment.dislikes });
+
+    res.json({
+      likes: comment.likes.length,
+      dislikes: comment.dislikes.length,
+    });
   } catch (error) {
     res.status(500).json({ error: `Server Error: ${error.message}` });
   }
 });
+
 
 
 
