@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaCheck, FaTimes } from 'react-icons/fa';
+const VITE_SERVER_URL = import.meta.env.VITE_SERVER_URL;
+
 
 const EditUserModal = ({ user, onClose, onSave }) => {
   const [form, setForm] = useState({ isAdmin: false, isActive: true });
@@ -19,7 +21,7 @@ const EditUserModal = ({ user, onClose, onSave }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:3000/api/users/${user._id}`, form, { withCredentials: true });
+      await axios.put(`${VITE_SERVER_URL}/api/users/${user._id}`, form, { withCredentials: true });
       onSave();
       onClose();
     } catch (err) {

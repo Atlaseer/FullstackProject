@@ -24,10 +24,12 @@ const PostList = () => {
   const urlSearchTerm = query.get('search') || '';
   const sort = query.get('sort') || 'alltime';
   const sortBy = query.get('sortBy') || 'date';
+  const VITE_SERVER_URL = import.meta.env.VITE_SERVER_URL;
+
 
   const fetchData = useCallback(async (pageNum, searchValue, sortValue, sortByValue) => {
     try {
-      let url = `http://localhost:3000/api/posts?page=${pageNum}&limit=${LIMIT}`;
+      let url = `${VITE_SERVER_URL}/api/posts?page=${pageNum}&limit=${LIMIT}`;
       if (searchValue) {
         url += `&search=${encodeURIComponent(searchValue)}`;
       }

@@ -1,5 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
+const VITE_SERVER_URL = import.meta.env.VITE_SERVER_URL;
+
 
 const AuthContext = createContext();
 
@@ -10,7 +12,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('http://localhost:3000/api/auth/me', {
+    axios.get(`${VITE_SERVER_URL}/api/auth/me`, {
       withCredentials: true,
     })
     .then((res) => {
@@ -24,7 +26,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (username, password) => {
     const res = await axios.post(
-      'http://localhost:3000/api/auth/login',
+      `${VITE_SERVER_URL}/api/auth/login`,
       { username, password },
       { withCredentials: true }
     );
@@ -32,7 +34,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = async () => {
-    await axios.post('http://localhost:3000/api/auth/logout', {}, {
+    await axios.post(`${VITE_SERVER_URL}/api/auth/logout`, {}, {
       withCredentials: true,
     });
     setUser(null);

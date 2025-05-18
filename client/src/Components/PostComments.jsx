@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaReply } from 'react-icons/fa';
+const VITE_SERVER_URL = import.meta.env.VITE_SERVER_URL;
+
 
 const PostComments = ({ postId, user }) => {
   const [comments, setComments] = useState([]);
@@ -13,7 +15,7 @@ const PostComments = ({ postId, user }) => {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/api/comments/post/${postId}`);
+        const res = await axios.get(`${VITE_SERVER_URL}/api/comments/post/${postId}`);
         setComments(res.data);
       } catch (err) {
         console.error('Failed to load comments');
@@ -33,7 +35,7 @@ const PostComments = ({ postId, user }) => {
 
     try {
       const res = await axios.post(
-        `http://localhost:3000/api/comments/`,
+        `${VITE_SERVER_URL}/api/comments/`,
         {
           postId,
           content: commentText,

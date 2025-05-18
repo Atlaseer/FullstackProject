@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import EditUserModal from './EditUserModal';
+const VITE_SERVER_URL = import.meta.env.VITE_SERVER_URL;
+
 
 const AdminUsers = ({ users, refreshUsers }) => {
   const [selectedUser, setSelectedUser] = useState(null);
@@ -8,7 +10,7 @@ const AdminUsers = ({ users, refreshUsers }) => {
   const handleDeleteUser = async (userId) => {
     if (!window.confirm('Are you sure you want to delete this user?')) return;
     try {
-      await axios.delete(`http://localhost:3000/api/users/${userId}`, { withCredentials: true });
+      await axios.delete(`${VITE_SERVER_URL}/api/users/${userId}`, { withCredentials: true });
       refreshUsers();
     } catch (err) {
       alert('Failed to delete user');

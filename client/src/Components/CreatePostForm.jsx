@@ -7,6 +7,8 @@ import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import '../styles/TiptapEditor.css';
 import MenuBar from './MenuBar';
+const VITE_SERVER_URL = import.meta.env.VITE_SERVER_URL;
+
 
 const CreatePostForm = () => {
   const [title, setTitle] = useState('');
@@ -69,7 +71,7 @@ const CreatePostForm = () => {
       }
 
       const res = await axios.post(
-        'http://localhost:3000/api/posts',
+        `${VITE_SERVER_URL}/api/posts`,
         formData,
         {
           withCredentials: true,
