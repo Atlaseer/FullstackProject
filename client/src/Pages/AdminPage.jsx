@@ -5,6 +5,8 @@ import axios from 'axios';
 import AdminStats from '../Components/AdminStats';
 import AdminUsers from '../Components/AdminUsers';
 import AdminPosts from '../Components/AdminPosts';
+const VITE_SERVER_URL = import.meta.env.VITE_SERVER_URL;
+
 
 const AdminPage = () => {
   const { user, isAdmin } = useAuth();
@@ -21,7 +23,7 @@ const AdminPage = () => {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get('http://localhost:3000/api/users', { withCredentials: true });
+      const res = await axios.get(`${VITE_SERVER_URL}/api/users`, { withCredentials: true });
       setUsers(res.data);
     } catch (err) {
       console.error('Failed to fetch users:', err);
@@ -30,7 +32,7 @@ const AdminPage = () => {
 
   const fetchPosts = async () => {
     try {
-      const res = await axios.get('http://localhost:3000/api/posts?limit=1000', { withCredentials: true });
+      const res = await axios.get(`${VITE_SERVER_URL}/api/posts?limit=1000`, { withCredentials: true });
       const postsData = Array.isArray(res.data) ? res.data : res.data.posts || [];
       setPosts(postsData);
       const topPost = postsData.reduce((max, p) => (p.averageRating > (max?.averageRating || 0) ? p : max), null);
