@@ -31,7 +31,6 @@ const allowedOrigins = ['http://localhost:5173', 'http://localhost', 'http://loc
 //Middleware
 app.use(cors({
     origin: function (origin, callback) {
-      //const allowedOrigins = ['http://localhost:5173'];
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
@@ -39,14 +38,9 @@ app.use(cors({
         callback(new Error('Not allowed by CORS'));
       }
     },
-    credentials: true
-  }));
-
-  app.use(cors({
-    origin: allowedOrigins, // Allow requests from these origins
-    credentials: true, // Allow cookies to be sent with requests
+    credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allow these HTTP methods
-    allowedHeaders: ['Content-Type', 'Authorization'], // Allow these headers
+    allowedHeaders: ['Content-Type', 'Authorization'],
   }));
 
 app.use(cookieParser());
