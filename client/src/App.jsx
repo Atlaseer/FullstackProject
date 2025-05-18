@@ -28,12 +28,12 @@ function App() {
   const { loading, isActive, user } = useAuth()
 
   if (loading) {
-    return <LoadingPage />
+    return <LoadingPage/>
   }
 
   if (!isActive && user) 
   {
-    return (
+  return (
       <>
         <BannedPage />
       </>
@@ -43,14 +43,18 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Header />
+      {loading ? (
+        <LoadingPage />
+      ) : (
+        <>
+      <Header/>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/profile/:username" element={<Profile />} />
-        <Route path="/newpost" element={<CreatePostPage />} />
-        <Route path="/post/:id" element={<ViewPostPage />} />
-        <Route path="/admin" element={<AdminPage />} />
+        <Route path="/profile/:username" element={<Profile/>} />
+        <Route path="/newpost" element={<CreatePostPage/>} />
+        <Route path="/post/:id" element={<ViewPostPage/>} />
+        <Route path="/admin" element={<AdminPage/>} />
         <Route path="*" element={<FourOFourPage />} />
         <Route path="/general" element={<GeneralPage />} />
         <Route path="/announcements" element={<AnnouncementsPage />} />
@@ -59,9 +63,11 @@ function App() {
         <Route path='/signup' element={<RegisterPage />} />
         <Route path="/about" element={<AboutPage />} />
       </Routes>
-      <Footer />
+      <Footer/>
+        </>
+      )}
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;
