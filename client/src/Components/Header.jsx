@@ -100,14 +100,17 @@ const Header = () => {
                 />
             </>
           ) : (
-              <>
-              <SearchBar
-                searchText={searchText}
-                setSearchText={setSearchText}
-                handleSearchKeyDown={handleSearchKeyDown}
+              <div className='forum-seperate-part'>
+              <div className='forum-seperate-part'>
+                <SearchBar
+                  searchText={searchText}
+                  setSearchText={setSearchText}
+                  handleSearchKeyDown={handleSearchKeyDown}
                 />
+              </div>
+              
               <Navbar currentPath={location.pathname} />
-            </>
+            </div>
           )}
           </div>
         <div className="forum-user">

@@ -12,7 +12,7 @@ const PostCard = ({ post }) => {
       </h3>
       <div className="post-meta">
         <span>By {post.user?.username || 'Unknown'}</span>
-        <span>{post.comments ?? 0} comments</span>
+        <span>{post.totalComments ?? 0} comments</span>
       </div>
       <StarRating stars={post.averageRating || 0} />
       <span className='post-views'>{post?.views ?? 0} views</span>

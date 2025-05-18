@@ -61,16 +61,36 @@
 }
 
 .forum-search {
-    display: flex;
-    align-items: center;
-    background-color: var(--bg-main);
-    padding: 6px 10px;
-    border-radius: 20px;
-    width: 300px;
-    border: 1px solid var(--border-color);
-    height: 32px;
-    align-self: center;
+  display: flex;
+  align-items: center;
+  background-color: var(--bg-card);
+  padding: 4px 10px;
+  border-radius: 20px;
+  width: 300px;
+  border: 1px solid var(--border-color);
+  height: 36px;
+  overflow: hidden;
 }
+
+.search-icon {
+  font-size: 1rem;
+  color: var(--text-muted);
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+.search-input {
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--text-color);
+  font-size: 14px;
+  width: 100%;
+  padding: 4px 0;
+  box-shadow: none;
+  border-radius: 0;
+}
+
 
 .navbar {
     display: flex;
