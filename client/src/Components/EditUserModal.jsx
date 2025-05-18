@@ -21,6 +21,7 @@ const EditUserModal = ({ user, onClose, onSave }) => {
     try {
       await axios.put(`http://localhost:3000/api/users/${user._id}`, form, { withCredentials: true });
       onSave();
+      onClose();
     } catch (err) {
       alert('Failed to update user');
     }
@@ -34,39 +35,38 @@ const EditUserModal = ({ user, onClose, onSave }) => {
 
   return (
     <div className="modal-overlay" onKeyDown={handleKeyDown} tabIndex={-1}>
-      <div className="modal-content">
+      <div className="modal-content" role="dialog" aria-modal="true">
         <h3>Edit User: {user.username}</h3>
-        <form className="modal-form" onSubmit={handleSave}>
-         <h3>Edit User: {userToEdit?.username}</h3>
+        <form className="modal-form" onSubmit={handleSubmit}>
+          <label>
+            <span>Admin</span>
+            <input
+              type="checkbox"
+              name="isAdmin"
+              checked={form.isAdmin}
+              onChange={handleChange}
+            />
+          </label>
 
-         <label>
-           Admin
-           <input
-             type="checkbox"
-             checked={form.isAdmin}
-             onChange={(e) => setForm({ ...form, isAdmin: e.target.checked })}
-           />
-         </label>
+          <label>
+            <span>Active</span>
+            <input
+              type="checkbox"
+              name="isActive"
+              checked={form.isActive}
+              onChange={handleChange}
+            />
+          </label>
 
-         <label>
-           Active
-           <input
-             type="checkbox"
-             checked={form.isActive}
-             onChange={(e) => setForm({ ...form, isActive: e.target.checked })}
-           />
-         </label>
-
-            <div className="modal-actions">
-              <button type="submit" className="save-btn">
-                <FaCheck /> Save
-              </button>
-              <button type="button" className="cancel-btn" onClick={onClose}>
-                <FaTimes /> Cancel
-              </button>
-            </div>
+          <div className="modal-actions">
+            <button type="submit" className="save-btn">
+              <FaCheck /> Save
+            </button>
+            <button type="button" className="cancel-btn" onClick={onClose}>
+              <FaTimes /> Cancel
+            </button>
+          </div>
         </form>
-
       </div>
     </div>
   );
