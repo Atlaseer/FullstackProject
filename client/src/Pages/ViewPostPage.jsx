@@ -6,6 +6,7 @@ import { useAuth } from '../contexts/AuthContext';
 import '../styles/Main.css';
 import PostComments from '../Components/PostComments';
 import PostDetails from '../Components/PostDetails';
+import EditPostForm from '../Components/EditPostForm';
 const VITE_SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 const ViewPostPage = () => {
@@ -15,6 +16,7 @@ const ViewPostPage = () => {
   const [rating, setRating] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
@@ -54,6 +56,29 @@ const ViewPostPage = () => {
     }
   }, [id, post]);
 
+  const handleEdit = () => {
+    setIsEditing(true);
+  };
+
+  const handleSave = async (updatedPost) => {
+    try {
+      const res = await axios.put(`${VITE_SERVER_URL}/api/posts/${id}`, updatedPost, {
+        withCredentials: true,
+      });
+      setPost(res.data);
+      setIsEditing(false);
+    } catch (err) {
+      console.error('Failed to update post', err);
+    }
+  };
+
+  const handleCancel = () => {
+    setIsEditing(false);
+  };
+
+  console.log('Logged-in user ID:', user?.id);
+  console.log('Post creator ID:', post?.user?._);
+
   return (
     <div className="homepage-container">
       <main className="homepage-main">
@@ -65,17 +90,26 @@ const ViewPostPage = () => {
             <div className="not-found-card"><p>{error}</p></div>
           ) : (
             <>
-              {post.coverImage && (
-                <div className="post-view-cover">
-                  <img
-                    src={`${VITE_SERVER_URL}${post.coverImage}`}
-                    alt={`${post.title} Cover image of`}
-                    className="post-view-cover-image"
-                  />
-                </div>
+              {isEditing ? (
+                <EditPostForm post={post} onSave={handleSave} onCancel={handleCancel} />
+              ) : (
+                <>
+                  {post.coverImage && (
+                    <div className="post-view-cover">
+                      <img
+                        src={`${VITE_SERVER_URL}${post.coverImage}`}
+                        alt={`${post.title} Cover image of`}
+                        className="post-view-cover-image"
+                      />
+                    </div>
+                  )}
+                  <PostDetails post={post} user={user} rating={rating} handleRatingChange={handleRatingChange} />
+                  {user?.id === post.user._id && (
+                    <button onClick={handleEdit}>Edit Post</button>
+                  )}
+                  <PostComments postId={post._id} comments={post.comments} user={user} />
+                </>
               )}
-              <PostDetails post={post} user={user} rating={rating} handleRatingChange={handleRatingChange} />
-              <PostComments postId={post._id} comments={post.comments} user={user} />
             </>
           )}
         </div>

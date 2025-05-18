@@ -1,0 +1,54 @@
+@import '../styles/Base.css';
+
+.edit-post-form {
+  background: var(--background-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-medium);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.edit-post-form h3 {
+  margin-bottom: var(--spacing-medium);
+  color: var(--text-primary);
+}
+
+.edit-post-form label {
+  display: block;
+  margin-bottom: var(--spacing-small);
+  color: var(--text-secondary);
+}
+
+.edit-post-form input,
+.edit-post-form textarea {
+  width: 100%;
+  padding: var(--spacing-small);
+  margin-bottom: var(--spacing-medium);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  background: var(--background-primary);
+  color: var(--text-primary);
+}
+
+.edit-post-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.edit-post-actions button {
+  padding: var(--spacing-small) var(--spacing-medium);
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+}
+
+.edit-post-actions button:first-child {
+  background-color: var(--button-primary-background);
+  color: var(--button-primary-text);
+}
+
+.edit-post-actions button:last-child {
+  background-color: var(--button-danger-background);
+  color: var(--button-danger-text);
+}
