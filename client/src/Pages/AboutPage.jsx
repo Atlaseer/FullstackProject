@@ -13,7 +13,7 @@ const AboutPage = () => {
             <h1>About FoodLover</h1>
             <p>Welcome to FoodLover!</p>
             <p>We who work here are:</p>
-            <p>Richard - Lead frontend - </p>
+            <p>Richard - Lead frontend <br/> Created the main file structure of the frontend, Richard has also worked on the routes making sure they connect.<br/> Richard also made all pages for the frontend but three of them, and they made their respective components. <br/> Richard also worked some part with deployment of the website and the backend to add features that needed for it to work.</p>
             <p>Simon Edman Persson - Lead backend - Created file structure and github repo, created mongoDB database and managed database access, created User, Comment and Post model, created user, comment and post route, as well as index.js, created tests to check backend coverage, created scripts to run the client and server simultaneously, as well as a script for tests, uploaded the project to Render, and wrote the report.</p>
           </div>
         </div>
