@@ -11,9 +11,10 @@ const AboutPage = () => {
         <div className="post-list">
           <div className="not-found-card">
             <h1>About FoodLover</h1>
-            <p>FoodLover is a website forum for people that love food, here you can not only post your own favorite 
-            recipes but also interact and get inspiration for new recipes from other food lovers!
-            </p>
+            <p>Welcome to FoodLover!</p>
+            <p>We who work here are:</p>
+            <p>Richard - Lead frontend - </p>
+            <p>Simon Edman Persson - Lead backend - Created mongoDB database</p>
           </div>
         </div>
       </main>
