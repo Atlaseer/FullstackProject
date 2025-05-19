@@ -67,7 +67,7 @@ const PostComments = ({ postId, user }) => {
   const handleReply = async (text, parentId) => {
     try {
       const res = await axios.post(
-        `http://localhost:3000/api/comments/`,
+        `${VITE_SERVER_URL}/api/comments/`,
         { postId, content: text, parent: parentId },
         { withCredentials: true }
       );

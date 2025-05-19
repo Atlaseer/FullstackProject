@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaReply, FaThumbsUp, FaThumbsDown } from 'react-icons/fa';
-
+const VITE_SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 const Comment = ({ comment, onReply, user }) => {
   const [showReplyInput, setShowReplyInput] = useState(false);
@@ -31,7 +31,7 @@ const Comment = ({ comment, onReply, user }) => {
   const handleVote = async (type) => {
     try {
       const res = await axios.post(
-        `http://localhost:3000/api/comments/${comment._id}/vote`,
+        `${VITE_SERVER_URL}/api/comments/${comment._id}/vote`,
         { type },
         { withCredentials: true }
       );
