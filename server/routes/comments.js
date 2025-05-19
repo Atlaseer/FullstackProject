@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 
 const router = express.Router();
 
-// ✅ Middleware to verify JWT token
+//Middleware to verify JWT token
 const requireAuth = (req, res, next) => {
   const token = req.cookies.token;
   if (!token) return res.status(401).json({ error: 'Not authenticated' });
@@ -19,7 +19,7 @@ const requireAuth = (req, res, next) => {
   }
 };
 
-// ✅ Create a comment or a reply
+//Create a comment or a reply
 router.post('/', requireAuth, async (req, res) => {
   try {
     const { postId, content, parent = null } = req.body;
@@ -58,7 +58,7 @@ router.post('/', requireAuth, async (req, res) => {
   }
 });
 
-// ✅ Get all comments for a post (flat list)
+//Get all comments for a post (flat list)
 router.get('/post/:postId', async (req, res) => {
   try {
     const { postId } = req.params;
@@ -76,7 +76,7 @@ router.get('/post/:postId', async (req, res) => {
   }
 });
 
-// ✅ Update a comment
+//Update a comment
 router.put('/:id', requireAuth, async (req, res) => {
   try {
     const { id } = req.params;
@@ -105,7 +105,7 @@ router.put('/:id', requireAuth, async (req, res) => {
   }
 });
 
-// ✅ Delete a comment
+//Delete a comment
 router.delete('/:id', requireAuth, async (req, res) => {
   try {
     const { id } = req.params;
@@ -171,8 +171,5 @@ router.post('/:id/vote', requireAuth, async (req, res) => {
     res.status(500).json({ error: `Server Error: ${error.message}` });
   }
 });
-
-
-
 
 export default router;
