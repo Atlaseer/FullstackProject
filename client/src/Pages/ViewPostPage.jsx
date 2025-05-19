@@ -104,9 +104,10 @@ const ViewPostPage = () => {
                     </div>
                   )}
                   <PostDetails post={post} user={user} rating={rating} handleRatingChange={handleRatingChange} />
-                  {user?.id === post.user._id && (
-                    <button onClick={handleEdit}>Edit Post</button>
-                  )}
+                  {user?.id && post?.user && user.id === post.user._id && (
+  <button onClick={handleEdit}>Edit Post</button>
+)}
+
                   <PostComments postId={post._id} comments={post.comments} user={user} />
                 </>
               )}
