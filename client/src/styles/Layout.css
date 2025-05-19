@@ -52,6 +52,11 @@
     gap: 20px;
 }
 
+.mobile-menu-toggle
+{
+    color: var(--text-color);
+}
+
 .forum-logo>.logo-link  {
     display: flex;
     flex-direction: row;
