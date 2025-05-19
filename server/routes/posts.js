@@ -35,17 +35,16 @@ router.post('/:id/rate', requireAuth, async (req, res) => {
     const post = await Post.findById(req.params.id);
     if (!post) return res.status(404).json({ message: 'Post not found' });
 
-    //Check if user has already rated
     const existing = post.ratings.find((r) => r.user.toString() === userId);
-
     if (existing) {
       existing.rating = rating;
     } else {
       post.ratings.push({ user: userId, rating });
-      post.totalRatings = post.ratings.length;
     }
 
+    post.totalRatings = post.ratings.length;
     post.updateAverageRating();
+    post.markModified('averageRating');
     await post.save();
 
     res.status(200).json({
@@ -58,6 +57,7 @@ router.post('/:id/rate', requireAuth, async (req, res) => {
     res.status(500).json({ error: 'Failed to rate post' });
   }
 });
+
 
 //Creates new post with cover image upload
 router.post('/', requireAuth, upload.single('coverImage'), async (req, res) => {
