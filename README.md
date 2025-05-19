@@ -4,6 +4,8 @@ FoodLovers is a website forum for sharing recipes between food lovers, and allow
 You can create your own user and start posting your favorite recipes, you can see how many views your own and other posts have. It also allows you to interact with other posts by making comments, leaving ratings and liking posts.
 There's also a search bar where you can look for the recipes you want.
 
+https://fullstackproject-clientside.onrender.com 
+
 ## System Architecture
 This project uses the following technologies:
 
