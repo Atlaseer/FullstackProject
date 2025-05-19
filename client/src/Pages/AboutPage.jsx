@@ -14,13 +14,12 @@ const AboutPage = () => {
             <p>Welcome to FoodLover!</p>
             <p>We who work here are:</p>
             <p>Richard - Lead frontend - </p>
-            <p>Simon Edman Persson - Lead backend - Created mongoDB database</p>
+            <p>Simon Edman Persson - Lead backend - Created file structure and github repo, created mongoDB database and managed database access, created User, Comment and Post model, created user, comment and post route, as well as index.js, created tests to check backend coverage, created scripts to run the client and server simultaneously, as well as a script for tests, uploaded the project to Render, and wrote the report.</p>
           </div>
         </div>
       </main>
     </div>
     )
 }
-
 
 export default AboutPage
