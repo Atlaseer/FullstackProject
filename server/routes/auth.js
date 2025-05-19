@@ -62,21 +62,12 @@ router.get('/me', (req, res) => {
         const user = jwt.verify(token, process.env.JWT_SECRET);
         console.log('Token verified successfully', user);
 
-        // Ensure admin and active properties are included in the response
+        // Send back user info
         const { id, username, admin, active } = user;
 
-        if (admin === undefined || active === undefined) {
-            return res.status(500).json({ error: 'Token payload is missing required properties' });
-        }
-
-        // Check if the user is active
+        // Optional: Warn if inactive (but allow)
         if (!active) {
-            return res.status(403).json({ error: 'User is inactive' });
-        }
-
-        // Check if the user is an admin
-        if (!admin) {
-            return res.status(403).json({ error: 'User is not an admin' });
+            console.warn('User is inactive');
         }
 
         res.json({ id, username, admin, active });
@@ -84,7 +75,8 @@ router.get('/me', (req, res) => {
         console.error('Token verification failed', error);
         res.status(403).json({ error: 'Invalid or expired token' });
     }
-})
+});
+
 
 router.post('/logout', (req, res) => {
     res.clearCookie('token');
