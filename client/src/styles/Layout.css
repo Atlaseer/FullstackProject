@@ -163,6 +163,30 @@
         align-items: center;
     }
 
+    .navbar_links {
+    flex-direction: column;
+    gap: 8px;
+    }
+
+    .forum-seperate-part {
+    flex-direction: column;
+    gap: 10px;
+    }
+
+    .forum-header {
+    padding: 12px;
+    font-size: 14px;
+    }
+
+    .sidebar {
+        display: none;
+    }
+
+        .forum-search {
+    width: 100%;
+    margin-top: 1rem;
+    }
+
     .mobile-menu-toggle {
         background: none;
         border: none;
