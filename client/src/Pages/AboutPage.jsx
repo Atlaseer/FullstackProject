@@ -17,6 +17,7 @@ const AboutPage = () => {
             <p>Simon Edman Persson - Lead backend - Created file structure and github repo, created mongoDB database and managed database access, created User, Comment and Post model, created user, comment and post route, as well as index.js, created tests to check backend coverage, created scripts to run the client and server simultaneously, as well as a script for tests, uploaded the project to Render, and wrote the report.</p>
             <p>Emil Kerker - Frontend - I also worked on the frontend and created the pages for the categories, like the "General" page, "Announcements" page, "Support" page and "Off Topic" page. I didn't do the styling for these but I added all the information and text for those pages. This "About" page I also created.<br/></p>
             <p>Ningxia Li - Fullstack - Created the function to add and display images in post page. Added intial info to readme file, like Installation instruction, Project directory structure and System architecture. Checked and verified API calls with Postman and made minor changes to fix the API calls.<br/></p>
+            <p>Oliver Brantin - Frontend ideas, admin confirmation logic used in admin page, live testing, powerpoint presentation<br/></p>
           </div>
         </div>
       </main>
