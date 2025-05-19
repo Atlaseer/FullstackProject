@@ -26,7 +26,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 const PORT = process.env.PORT || 3000;
 
-const allowedOrigins = ['http://localhost:5173', 'http://localhost', 'http://localhost:3000']
+const allowedOrigins = ['http://localhost:5173', 'http://localhost', 'http://localhost:3000', 'https://fullstackproject-clientside.onrender.com']
 
 //Middleware
 app.use(cors({
