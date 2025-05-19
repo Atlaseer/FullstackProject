@@ -61,6 +61,8 @@ app.get('/api/message', (req, res) => {
     res.json({ message: 'Message from backend' })
 })
 
+
+
 const ipAddress = ip.address(); // Get the local IP address
 
 mongoose.connect(process.env.MONGO_URI)

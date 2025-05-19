@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
+const VITE_SERVER_URL = import.meta.env.VITE_SERVER_URL;
+import Comment from './Comment';
 
 const PostComments = ({ postId, user }) => {
   const [comments, setComments] = useState([]);
