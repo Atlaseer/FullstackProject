@@ -23,7 +23,7 @@ router.post('/login', async (req, res) => {
     //Verifies password
     const valid = await bcrypt.compare(password, user.password);
     if (!valid) {
-        return res.status(401).json({error: 'Invalid credentials'});
+        return res.status(401).json({error: 'Invalid username or password'});
     }
 
     // If JWT_SECRET is not set, run the generateJWT_SecretONCE.mjs file to get a code for it

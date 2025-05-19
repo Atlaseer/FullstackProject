@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for middlewares/upload.js</title>
+    <title>Code coverage report for middlewares/adminAuth.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../index.html">All files</a> / <a href="index.html">middlewares</a> upload.js</h1>
+        <h1><a href="../index.html">All files</a> / <a href="index.html">middlewares</a> adminAuth.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/14</span>
+                <span class='fraction'>0/16</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>0/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/3</span>
+                <span class='fraction'>0/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/14</span>
+                <span class='fraction'>0/15</span>
             </div>
         
             
@@ -93,21 +93,7 @@
 <a name='L28'></a><a href='#L28'>28</a>
 <a name='L29'></a><a href='#L29'>29</a>
 <a name='L30'></a><a href='#L30'>30</a>
-<a name='L31'></a><a href='#L31'>31</a>
-<a name='L32'></a><a href='#L32'>32</a>
-<a name='L33'></a><a href='#L33'>33</a>
-<a name='L34'></a><a href='#L34'>34</a>
-<a name='L35'></a><a href='#L35'>35</a>
-<a name='L36'></a><a href='#L36'>36</a>
-<a name='L37'></a><a href='#L37'>37</a>
-<a name='L38'></a><a href='#L38'>38</a>
-<a name='L39'></a><a href='#L39'>39</a>
-<a name='L40'></a><a href='#L40'>40</a>
-<a name='L41'></a><a href='#L41'>41</a>
-<a name='L42'></a><a href='#L42'>42</a>
-<a name='L43'></a><a href='#L43'>43</a>
-<a name='L44'></a><a href='#L44'>44</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L31'></a><a href='#L31'>31</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -116,23 +102,8 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -142,57 +113,47 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"> import multer from 'multer';
- import path from 'path';
- import fs from 'fs';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import jwt from 'jsonwebtoken';
+import User from '../models/User.js';
 &nbsp;
- // Make sure the upload directory exists
-const uploadDir = <span class="cstat-no" title="statement not covered" >'./uploads';</span>
-<span class="cstat-no" title="statement not covered" > if (!fs.existsSync(uploadDir)) {</span>
-<span class="cstat-no" title="statement not covered" > fs.mkdirSync(uploadDir, { recursive: true });</span>
- }
+//This function is made to authenticate admin rights
+export const requireAuth = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(r</span>eq, res, next) =&gt; {</span>
+  const token = <span class="cstat-no" title="statement not covered" >req.cookies.token;</span>
+<span class="cstat-no" title="statement not covered" >  if (!token) <span class="cstat-no" title="statement not covered" >return res.status(401).json({ error: 'Not authenticated' });</span></span>
 &nbsp;
- // Configuration Storage
-const storage = <span class="cstat-no" title="statement not covered" >multer.diskStorage({</span>
- destination: <span class="fstat-no" title="function not covered" >(r</span>eq, file, cb) =&gt; {
-<span class="cstat-no" title="statement not covered" > cb(null, uploadDir);</span>
- },
-  // Create a unique file name to prevent naming conflicts
- filename: <span class="fstat-no" title="function not covered" >(r</span>eq, file, cb) =&gt; {
-const uniqueSuffix = <span class="cstat-no" title="statement not covered" >Date.now() + '-' + Math.round(Math.random() * 1e9);</span>
- const ext = <span class="cstat-no" title="statement not covered" >path.extname(file.originalname);</span>
-<span class="cstat-no" title="statement not covered" > cb(null, 'cover-' + uniqueSuffix + ext);</span>
- }
-});
+  //Attach user info to the request object
+<span class="cstat-no" title="statement not covered" >  try {</span>
+    const decoded = <span class="cstat-no" title="statement not covered" >jwt.verify(token, process.env.JWT_SECRET);</span>
+<span class="cstat-no" title="statement not covered" >    req.user = decoded; </span>
+<span class="cstat-no" title="statement not covered" >    next();</span>
+  } catch (err) {
+<span class="cstat-no" title="statement not covered" >    return res.status(403).json({ error: 'Invalid token' });</span>
+  }
+};
 &nbsp;
- // File filter, only allow image files
-const fileFilter = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(r</span>eq, file, cb) =&gt; {</span>
- const allowedFileTypes = <span class="cstat-no" title="statement not covered" >['image/jpeg', 'image/jpg', 'image/png', </span>
-'image/gif'];
-<span class="cstat-no" title="statement not covered" > if (allowedFileTypes.includes(file.mimetype)) {</span>
-<span class="cstat-no" title="statement not covered" > cb(null, true);</span>
- } else {
-<span class="cstat-no" title="statement not covered" > cb(new Error('Unsupported file type! Only jpeg, jpg, png and gif formats are allowed'), false);</span>
- }
- };
-&nbsp;
- // Create a multer instance
-export const upload = <span class="cstat-no" title="statement not covered" >multer({</span>
- storage: storage,
- limits: {
- fileSize: 5 * 1024 * 1024, // Limit file size to 5MB
- },
-fileFilter: fileFilter
- });
- export default upload;
- </pre></td></tr></table></pre>
+//Compares the user id in the token with the user id in the database
+export const requireAdmin = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >as</span>ync (req, res, next) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >  try {</span>
+    const user = <span class="cstat-no" title="statement not covered" >await User.findById(req.user.id);</span>
+<span class="cstat-no" title="statement not covered" >    if (!user || !user.isAdmin) {</span>
+<span class="cstat-no" title="statement not covered" >      return res.status(403).json({ error: 'Access denied. Admins only.' });</span>
+    }
+<span class="cstat-no" title="statement not covered" >    next();</span>
+  } catch (err) {
+<span class="cstat-no" title="statement not covered" >    res.status(500).json({ error: 'Server error' });</span>
+  }
+};
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
