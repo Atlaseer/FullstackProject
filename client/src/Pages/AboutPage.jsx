@@ -15,6 +15,7 @@ const AboutPage = () => {
             <p>Emil Kerker - Frontend - I also worked on the frontend and created the pages for the categories, like the "General" page, "Announcements" page, "Support" page and "Off Topic" page. I didn't do the styling for these but I added all the information and text for those pages. This "About" page I also created.<br/></p>
             <p>Ningxia Li - Fullstack - Created the function to add and display images in post page. Added intial info to readme file, like Installation instruction, Project directory structure and System architecture. Checked and verified API calls with Postman and made minor changes to fix the API calls.<br/></p>
             <p>Oliver Brantin - Frontend ideas, admin confirmation logic used in admin page, live testing, powerpoint presentation<br/></p>
+            <p>Emil Jansson - Fullstack<br/> Created the profile page for the users, also most of the styling there. Made route for getting all the posts from the profile's user which then links back to the users posts.<br/>Created the logo together with Richard. Also restructured the files which exceeded 300 lines.<br/>Aswell as playing a part in debugging the deployment problem in the end together with Simon and Richard.</p>
           </div>
         </div>
       </main>
