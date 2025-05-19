@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import Sidebar from '../Components/Sidebar';
+
 import { useAuth } from '../contexts/AuthContext';
 import '../styles/Main.css';
 import PostComments from '../Components/PostComments';
@@ -82,7 +82,6 @@ const ViewPostPage = () => {
   return (
     <div className="homepage-container">
       <main className="homepage-main">
-        <Sidebar />
         <div className="post-list">
           {loading ? (
             <div className="not-found-card"><p>Loading post...</p></div>
