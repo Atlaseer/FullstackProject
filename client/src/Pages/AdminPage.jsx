@@ -46,6 +46,20 @@ const AdminPage = () => {
     }
   };
 
+  const handleDeletePost = async (postId) => {
+  if (!window.confirm('Are you sure you want to delete this post?')) return;
+
+  try {
+    await axios.delete(`${VITE_SERVER_URL}/api/posts/${postId}`, {
+      withCredentials: true,
+    });
+    fetchPosts(); // Refresh list
+  } catch (err) {
+    console.error('Failed to delete post:', err);
+  }
+};
+
+
   useEffect(() => {
     fetchUsers();
     fetchPosts();
@@ -57,7 +71,7 @@ const AdminPage = () => {
         <h2>Admin Dashboard</h2>
         <AdminStats stats={stats} />
         <AdminUsers users={users} refreshUsers={fetchUsers} />
-        <AdminPosts posts={posts} refreshPosts={fetchPosts} />
+        <AdminPosts posts={posts} refreshPosts={fetchPosts} handleDeletePost={handleDeletePost} />
       </main>
     </div>
   );

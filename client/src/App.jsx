@@ -16,10 +16,7 @@ import BannedPage from './Pages/BannedPage'
 import LoginPage from './Pages/LoginPage'
 import AdminPage from './Pages/AdminPage'
 import Profile from './Pages/Profile'
-import GeneralPage from './Pages/GeneralPage'
 import AnnouncementsPage from './Pages/AnnouncementsPage'
-import SupportPage from './Pages/SupportPage'
-import OffTopicPage from './Pages/OffTopicPage'
 import RegisterPage from './Pages/RegisterPage'
 import AboutPage from './Pages/AboutPage'
 
@@ -56,10 +53,7 @@ function App() {
         <Route path="/post/:id" element={<ViewPostPage/>} />
         <Route path="/admin" element={<AdminPage/>} />
         <Route path="*" element={<FourOFourPage />} />
-        <Route path="/general" element={<GeneralPage />} />
         <Route path="/announcements" element={<AnnouncementsPage />} />
-        <Route path="/support" element={<SupportPage />} />
-        <Route path="/off-topic" element={<OffTopicPage />} />
         <Route path='/signup' element={<RegisterPage />} />
         <Route path="/about" element={<AboutPage />} />
       </Routes>
