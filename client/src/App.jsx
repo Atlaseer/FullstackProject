@@ -43,7 +43,7 @@ function App() {
       {loading ? (
         <LoadingPage />
       ) : (
-        <>
+      <>
       <Header/>
       <Routes>
         <Route path="/" element={<HomePage />} />
